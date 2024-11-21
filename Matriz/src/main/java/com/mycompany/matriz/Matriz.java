@@ -16,6 +16,7 @@ public class Matriz {
         double alea;
         char matriz [][]=new char[3][3];
         int lista [] =new int[10];
+        Scanner sc = new Scanner (System.in);
         
         //Primera impresion de tabla
         for (int i = 0; i < 3; i++) {
@@ -32,7 +33,6 @@ public class Matriz {
             }
             else {jugador='x';
             }
-            Scanner sc = new Scanner (System.in);
             if (jugador =='x'){
             casilla= sc.nextInt();
             }

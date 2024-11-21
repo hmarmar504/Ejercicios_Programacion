@@ -38,40 +38,78 @@ public class ProyectoParejas {
         ajustes[6]=0;//Variable de salida del juego: 0=Seguir jugando, otro=Salir del juego
         
         int selec;
-        boolean tabNoPar=false,salida=false;
+        boolean fallo=false,salida=false;
         Scanner sc = new Scanner (System.in);
         do{
-        //Seleccion de los ajustes del juego
-        System.out.println("Elija sus opciones de juego");
-        System.out.println("1.- Tamaño del tablero");
-        System.out.println("2.- Dificultad");
-        System.out.println("3.- Zoom");
-        System.out.println("4.- Cantidad de errores");
-        System.out.println("5.- Tiempo de muestra");
-        System.out.println("6.- Salir de los ajustes");
-        System.out.println("7.- Salir del juego");
-        
-        selec=sc.nextInt();
-        switch(selec){
-            case 1 -> {//Indicacion del tamaño del tablero
-                    System.out.println("Opciones de tamaño");
+            //Seleccion de los ajustes del juego
+            System.out.println("Elija sus opciones de juego");
+            System.out.println("1.- Tamaño del tablero");
+            System.out.println("2.- Dificultad");
+            System.out.println("3.- Zoom");
+            System.out.println("4.- Cantidad de errores");
+            System.out.println("5.- Tiempo de muestra");
+            System.out.println("6.- Salir de los ajustes");
+            System.out.println("7.- Salir del juego");
+
+            selec=sc.nextInt();
+            switch(selec){
+                case 1 -> {//Indicacion del tamaño del tablero
+                        System.out.println("Opciones de tamaño");
+                        do{
+                        System.out.println("introduzca el tamaño horizontal");
+                        ajustes[0]=sc.nextInt();
+                        System.out.println("Introduzca el tamaño vertical");
+                        ajustes[1]=sc.nextInt();
+
+                        if((ajustes[0]%ajustes[1]==0)||(ajustes[1]%ajustes[0]==0)){
+                            fallo=true;
+                        }
+                        else{
+                            System.out.println("Los valores introducidos no son validos, introduzcalos otra vez");
+                        }
+                        }while(fallo==false);
+                }
+                case 2 -> {//Seleccion de dificultad
                     do{
-                    System.out.println("introduzca el tamaño horizontal");
-                    ajustes[0]=sc.nextInt();
-                    System.out.println("Introduzca el tamaño vertical");
-                    ajustes[1]=sc.nextInt();
-            
-                    if((ajustes[0]%ajustes[1]==0)||(ajustes[1]%ajustes[0]==0)){
-                        tabNoPar=true;
-                    }
-                    else{
-                        System.out.println("Los valores introducidos no son validos, introduzcalos otra vez");
-                    }
-                    }while(tabNoPar=false);
+                    System.out.println("Seleccione dificultad");
+                    ajustes[2]=sc.nextInt();
+
+                        if(ajustes[2]>-1||ajustes[2]<3){
+                            fallo=true;
+                        }
+                        else{
+                            System.out.println("Los valores introducidos no son validos, introduzcalos otra vez");
+                        }
+                    }while(fallo==false);
+                }
+                case 3 ->{//Seleccion de zoom
+                    do{
+                    System.out.println("Seleccione zoom");
+                    ajustes[3]=sc.nextInt();
+
+                        if(ajustes[3]>-1||ajustes[3]<3){
+                            fallo=true;
+                        }
+                        else{
+                            System.out.println("Los valores introducidos no son validos, introduzcalos otra vez");
+                        }
+                    }while(fallo==false);
+                }
+                case 4 ->{//Seleccion cantidad de errores
+                    System.out.println("Seleccione la cantidad de errores");
+                    ajustes[4]=sc.nextInt();
+                }
+                case 5->{
+                    System.out.println("Seleccione el tiempo de muestra en ms");
+                    ajustes[5]=sc.nextInt();
+                }
+                case 6->{
+                    salida=false;
+                }
+                case 7->{
+                    ajustes[6]=1;
+                }
             }
-            case 2 -> {//Seleccion de dificultad
-                System.out.println("b");}
-        }
         }while(salida);
     }
 
