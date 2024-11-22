@@ -3,15 +3,16 @@
 package com.mycompany.proyectoparejas;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.Random;
 /**
  *
  * @author usuario
  */
 public class ProyectoParejas {
     //generar una lista con los tipos de caracteres a introducir
-    public static void ascii(char[]tabas,int cant){
+    public static void ascii(char[]tabas){
         
-        for(int i=0;i<tabas.length;i++){
+        for(int i=0;i<tabas.length/2;i++){
             if (i<10){
                 tabas[i] = (char) (i + 48);
             }
@@ -22,7 +23,17 @@ public class ProyectoParejas {
                 tabas[i] = (char) (i+63);
             }
         }
-        System.out.println(Arrays.toString(tabas));
+        for(int i=0;i<tabas.length/2;i++){
+            if (i<10){
+                tabas[i+tabas.length/2] = (char) (i + 48);
+            }
+            else if(i>=10&&i<34){
+                tabas[i+tabas.length/2] = (char) (i+55);
+            }
+            else{
+                tabas[i+tabas.length/2] = (char) (i+63);
+            }
+        }
     }
     
     public static void menuInicial(int[]ajustes){
@@ -125,7 +136,7 @@ public class ProyectoParejas {
                     ajustes[5]=sc.nextInt();
                 }
                 case 6->{
-                    salida=false;
+                    salida=true;
                 }
                 case 7->{
                     ajustes[6]=1;
@@ -134,11 +145,48 @@ public class ProyectoParejas {
                     System.out.println("Introduzca un numero valido");
                 }
             }
-        }while(salida);
+        }while(salida!=true);
     }
-
-    public static void genTabla(int[]ajustes,char[][]general){
+    //Rellenado y mezcla de la tabla con los valores posibles*2
+    public static void genTabla(int[]ajustes,char[][]general,char[]ascii){
+        char mem;
+        int cont=0,cambio1,cambio2;
+        for (int a = 0; a < general.length; a++) {
+            for (int b = 0; b < general[0].length; b++) {
+                general[a][b]=ascii[cont];
+                cont++;
+            }
+        }
+        for(int a=0; a< general.length;a++){
+            for(int b=0; b<general[0].length;b++){
+                cambio1=(int) (Math.random()*general.length);
+                cambio2=(int) (Math.random()*general[0].length);
+                mem=general[a][b];
+                general[a][b]=general[cambio1][cambio2];
+                general[cambio1][cambio2]=mem;
+            }
+        }
         
+    }
+    //Rellenado de tabla vacia
+    public static void tabVacia(char[][]){
+        
+    }
+    //Imprimir tabla con la cuadricula hecha(mas o menos)
+    public static void imprimirTablero(char[][]tablero){
+
+        for (int i = 0; i < tablero.length; i++) {
+                for (int j = 0; j < tablero[0].length; j++) {
+                    System.out.print("|" + tablero[i][j]);
+                }
+                System.out.print("|");
+            System.out.println();
+            for (int j = 0; j < tablero[0].length; j++) {
+                    System.out.print("--");
+            }
+            System.out.print("-");
+            System.out.println();
+        }
     }
     public static void main(String[] args) {
         //declaracion de varialbes
@@ -151,26 +199,35 @@ public class ProyectoParejas {
         int ajustes[] = new int[8];
         int dimx,dimy,fallos,totalCasi;
         Scanner sc = new Scanner (System.in);
+        
         do{
             //Ajustes predeterminados del juego
-        ajustes[0]=4;//Ancho de la tabla Maximo 10
-        ajustes[1]=4;//Alto de la tabla Maximo 10
-        ajustes[2]=1;//Zoom Maximo 3
-        ajustes[3]=0;//Dificultad de la maquina: 0=No maquina, 1=Facil, 2=Medio, 3=Dificil
-        ajustes[4]=3;//Cantidad de errores permitidos
-        ajustes[5]=3;//Tiempo de muestra mS
-        ajustes[6]=0;//Variable de salida del juego: 0=Seguir jugando, otro=Salir del juego
-        
-        //Llamada a los apartados del menu
-        menuInicial(ajustes);
-        
-        //Inicializacion de la tabla
-        general = new char [ajustes[0],ajustes[1]];
-        
-        //Rellenado de la tabla
-        genTabla(ajustes,general);
-        
-        }while(ajustes[6]!=0);
+            ajustes[0]=4;//Ancho de la tabla Maximo 10
+            ajustes[1]=4;//Alto de la tabla Maximo 10
+            ajustes[2]=1;//Zoom Maximo 3
+            ajustes[3]=0;//Dificultad de la maquina: 0=No maquina, 1=Facil, 2=Medio, 3=Dificil
+            ajustes[4]=3;//Cantidad de errores permitidos
+            ajustes[5]=3;//Tiempo de muestra mS
+            ajustes[6]=0;//Variable de salida del juego: 0=Seguir jugando, otro=Salir del juego
+
+            //Llamada a los apartados del menu
+            menuInicial(ajustes);
+
+            if(ajustes[6]==0){//Condicion de juego cerrado
+
+                //Generacion de caracteres de la tabla
+                asciiGuardado=new char [ajustes[0]*ajustes[1]];
+                ascii(asciiGuardado);
+                
+                //Inicializacion de la tabla
+                general = new char [ajustes[0]][ajustes[1]];
+
+                //Rellenado de la tabla
+                genTabla(ajustes,general,asciiGuardado);
+                
+                imprimirTablero(general);
+            }//Cierre de condicion de juego cerrado
+        }while(ajustes[6]==0);
     }
         
 }
