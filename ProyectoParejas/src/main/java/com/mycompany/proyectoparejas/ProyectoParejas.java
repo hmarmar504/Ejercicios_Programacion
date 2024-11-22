@@ -25,17 +25,38 @@ public class ProyectoParejas {
         System.out.println(Arrays.toString(tabas));
     }
     
+    public static void menuInicial(int[]ajustes){
+        int selec;
+        boolean fallo=false;
+        Scanner sc = new Scanner (System.in);
+        do{
+        System.out.println("Elija sus opciones de juego");
+        System.out.println("1.- Iniciar con ajustes predefinidos");
+        System.out.println("2.- Cambiar configuracion");
+        System.out.println("3.- Terminar el juego");
+        
+        selec=sc.nextInt();
+        
+            switch(selec){
+                case 1 -> {
+                    fallo=true;
+                }
+                case 2->{
+                    menuOpciones(ajustes);
+                    fallo=true;
+                }
+                case 3->{
+                    ajustes[6]=1;
+                    fallo=true;
+                }
+                default  ->{
+                    System.out.println("Introduzca un numero valido");
+                }
+            }
+        }while(fallo==false);
+    }
     //Menu principal de opciones
     public static void menuOpciones(int[]ajustes){
-        
-        //Ajustes predeterminados del juego
-        ajustes[0]=4;//Ancho de la tabla Maximo 10
-        ajustes[1]=4;//Alto de la tabla Maximo 10
-        ajustes[2]=1;//Zoom Maximo 3
-        ajustes[3]=0;//Dificultad de la maquina: 0=No maquina, 1=Facil, 2=Medio, 3=Dificil
-        ajustes[4]=3;//Cantidad de errores permitidos
-        ajustes[5]=3;//Tiempo de muestra mS
-        ajustes[6]=0;//Variable de salida del juego: 0=Seguir jugando, otro=Salir del juego
         
         int selec;
         boolean fallo=false,salida=false;
@@ -109,32 +130,46 @@ public class ProyectoParejas {
                 case 7->{
                     ajustes[6]=1;
                 }
+                default  ->{
+                    System.out.println("Introduzca un numero valido");
+                }
             }
         }while(salida);
     }
 
+    public static void genTabla(int[]ajustes,char[][]general){
+        
+    }
     public static void main(String[] args) {
         //declaracion de varialbes
         //tablas de muestra, tabla entera, y datos mostrados para la maquina
         char general [][];
-        char intentos [][];
-        char muestra [][];
+        char mostrados [][];
+        char salida [][];
         //variables generales
         char asciiGuardado [];
         int ajustes[] = new int[8];
-        char asciiIntro[];
         int dimx,dimy,fallos,totalCasi;
         Scanner sc = new Scanner (System.in);
         do{
-        menuOpciones(ajustes);
+            //Ajustes predeterminados del juego
+        ajustes[0]=4;//Ancho de la tabla Maximo 10
+        ajustes[1]=4;//Alto de la tabla Maximo 10
+        ajustes[2]=1;//Zoom Maximo 3
+        ajustes[3]=0;//Dificultad de la maquina: 0=No maquina, 1=Facil, 2=Medio, 3=Dificil
+        ajustes[4]=3;//Cantidad de errores permitidos
+        ajustes[5]=3;//Tiempo de muestra mS
+        ajustes[6]=0;//Variable de salida del juego: 0=Seguir jugando, otro=Salir del juego
         
+        //Llamada a los apartados del menu
+        menuInicial(ajustes);
         
-        totalCasi=sc.nextInt();
-        asciiGuardado = new char[totalCasi];
+        //Inicializacion de la tabla
+        general = new char [ajustes[0],ajustes[1]];
         
+        //Rellenado de la tabla
+        genTabla(ajustes,general);
         
-        ascii(asciiGuardado,totalCasi);
-        System.out.println(Arrays.toString(asciiGuardado));
         }while(ajustes[6]!=0);
     }
         
