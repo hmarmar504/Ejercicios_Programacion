@@ -1,6 +1,8 @@
 
 
 package com.mycompany.proyectoparejas;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Random;
@@ -33,6 +35,18 @@ public class ProyectoParejas {
             else{
                 tabas[i+tabas.length/2] = (char) (i+63);
             }
+        }
+    }
+    public static void limpiar(){
+        try{
+            Robot limpiar = new Robot();
+            keyPress(KeyEvent.VK_CONTROL);
+            limpiar.keyPress(KeyEvent.VK_L);
+            limpiar.keyRelease(KeyEvent.VK_CONTROL);
+            limpiar.keyRelease(KeyEvent.VK_L);
+            
+        }  catch (Exception e) {
+            System.out.println("Error al limpiar la pantalla"+e.getMessage());
         }
     }
     
@@ -73,6 +87,7 @@ public class ProyectoParejas {
         boolean fallo=false,salida=false;
         Scanner sc = new Scanner (System.in);
         do{
+            limpiar();
             //Seleccion de los ajustes del juego
             System.out.println("Elija sus opciones de juego");
             System.out.println("1.- Tamaño del tablero");
@@ -82,13 +97,14 @@ public class ProyectoParejas {
             System.out.println("5.- Tiempo de muestra");
             System.out.println("6.- Salir de los ajustes");
             System.out.println("7.- Salir del juego");
-
             selec=sc.nextInt();
             switch(selec){
                 case 1 -> {//Indicacion del tamaño del tablero
                         System.out.println("Opciones de tamaño");
                         do{
+                            limpiar();
                             fallo=false;
+                            
                         System.out.println("introduzca el tamaño horizontal (maximo 10)");
                         ajustes[0]=sc.nextInt();
                         System.out.println("Introduzca el tamaño vertical (maximo 10)");
@@ -106,6 +122,7 @@ public class ProyectoParejas {
                 case 2 -> {//Seleccion de dificultad
                     do{
                         fallo=false;
+                        limpiar();
                     System.out.println("Seleccione dificultad");
                     ajustes[2]=sc.nextInt();
 
@@ -120,6 +137,7 @@ public class ProyectoParejas {
                 case 3 ->{//Seleccion de zoom
                     do{
                         fallo=false;
+                        limpiar();
                     System.out.println("Seleccione zoom");
                     ajustes[3]=sc.nextInt();
 
@@ -132,21 +150,26 @@ public class ProyectoParejas {
                     }while(fallo==false);
                 }
                 case 4 ->{//Seleccion cantidad de errores
+                    limpiar();
                     System.out.println("Seleccione la cantidad de errores");
                     ajustes[4]=sc.nextInt();
                 }
                 case 5->{
+                    limpiar();
                     System.out.println("Seleccione el tiempo de muestra en ms");
                     ajustes[5]=sc.nextInt();
                 }
                 case 6->{
+                    limpiar();
                     salida=true;
                 }
                 case 7->{
+                    limpiar();
                     ajustes[6]=1;
                     salida=true;
                 }
                 default  ->{
+                    limpiar();
                     System.out.println("Introduzca un numero valido");
                 }
             }
@@ -215,7 +238,7 @@ public class ProyectoParejas {
                     cas1=Character.getNumericValue(casilla1.charAt(0));
                     cas11=Character.getNumericValue(casilla1.charAt(1));
 
-                    if (cas1>0&&cas1<salida.length&&cas11>0&&cas11<salida[0].length){//Filtro para entradas no validas
+                    if (cas1>=0&&cas1<salida.length&&cas11>=0&&cas11<salida[0].length){//Filtro para entradas no validas
                         //Sustitucion de la casilla elegida
                         if(salida[cas1][cas11]==' '){
 
@@ -230,7 +253,7 @@ public class ProyectoParejas {
                         }
                     }
                     else{
-                        System.out.println("Introduce valores validos");
+                        System.out.println("Introduce valores n");
                     }
                 }
                 else{
@@ -249,7 +272,7 @@ public class ProyectoParejas {
                     cas2=Character.getNumericValue(casilla2.charAt(0));
                     cas22=Character.getNumericValue(casilla2.charAt(1));
 
-                    if (cas1>0&&cas2<salida.length&&cas11>0&&cas22<salida[0].length){//Filtro para entradas no validas
+                    if (cas2>=0&&cas2<salida.length&&cas22>=0&&cas22<salida[0].length){//Filtro para entradas no validas
                         //Sustitucion de la casilla elegida
                         if(salida[cas2][cas22]==' '){
 
@@ -309,6 +332,19 @@ public class ProyectoParejas {
             System.out.println("La maquina pierde");
         }
     }
+    public static void tiempo(long ms){//Calculo de la duracion del juego
+        
+        long tseg,tmin,thrs,seg,min;
+        
+        tseg = ms/1000;
+        seg=tseg%60;
+        tmin=tseg/60;
+        min=tmin%60;
+        thrs=tmin/60;
+        System.out.println("Tu tiempo ha sido "+ thrs + ":" + min + ":" + seg );
+        System.out.println("Tu tiempo ha sido "+ thrs + ":" + tmin + ":" + tseg );
+            System.out.println(ms);
+    }
     public static void main(String[] args) {
         //declaracion de varialbes
         //tablas de muestra, tabla entera, y datos mostrados para la maquina
@@ -318,9 +354,9 @@ public class ProyectoParejas {
         //variables generales
         char asciiGuardado [];
         int ajustes[] = new int[8];
-        int dimx,dimy,fallos,totalCasi;
+        
         String nombre;
-        long inicio=0, tTotal;
+        long inicio=0, ms;
         
         Scanner sc = new Scanner (System.in);
         
@@ -352,19 +388,19 @@ public class ProyectoParejas {
                 salida = new char [ajustes[0]][ajustes[1]];
                 tabVacia(mostrados);
                 tabVacia(salida);
-                imprimirTablero(general);
-                imprimirTablero(mostrados);
                 //Nombre del jugador
                 System.out.println("Introduzca un nombre");
                 nombre=sc.next();
+                imprimirTablero(salida);
                 //Insercion de temporizador
                 inicio=System.currentTimeMillis();
                 //Seleccion de casilla
                 selec(salida,general,mostrados,ajustes);
                 
             }//Cierre de condicion de juego cerrado
-        tTotal=(System.currentTimeMillis()-inicio);
-        System.out.println("Tu tiempo ha sido "+tTotal);
+        //Tiempo de juego
+        ms=(System.currentTimeMillis()-inicio);
+        tiempo(ms);
         }while(ajustes[6]==0);
         
     }
