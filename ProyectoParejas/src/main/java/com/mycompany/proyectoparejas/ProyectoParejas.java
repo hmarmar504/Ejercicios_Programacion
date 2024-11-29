@@ -38,16 +38,7 @@ public class ProyectoParejas {
         }
     }
     public static void limpiar(){
-        try{
-            Robot limpiar = new Robot();
-            keyPress(KeyEvent.VK_CONTROL);
-            limpiar.keyPress(KeyEvent.VK_L);
-            limpiar.keyRelease(KeyEvent.VK_CONTROL);
-            limpiar.keyRelease(KeyEvent.VK_L);
-            
-        }  catch (Exception e) {
-            System.out.println("Error al limpiar la pantalla"+e.getMessage());
-        }
+        
     }
     
     public static void menuInicial(int[]ajustes){
@@ -206,6 +197,7 @@ public class ProyectoParejas {
             }
         }
     }
+    
     //Imprimir tabla con la cuadricula hecha(mas o menos)
     public static void imprimirTablero(char[][]tablero){
 
@@ -223,20 +215,30 @@ public class ProyectoParejas {
         }
     }
     
-    public static void selec(char[][]salida,char[][]general,char[][]mostrados,int[] ajustes){
-        boolean selec=false,victoria;
-        String casilla1,casilla2;
-        int cas1=0,cas11=0,cas2=0,cas22=0,fallosU=0,fallosM=0;
-        Scanner sc = new Scanner (System.in);
-        do{
-            do{//Eleccion de la primera casilla
+    public static int dificil(char [][]salida,char[][]mostrados,char[][]general,int fallos){
+    //Las casillas son seleccionadas teniendo en cuenta la tabla de referencia para ver si ya ha salido ese valor antes en la tablal
+    int cas1,cas11,cas2,cas22;
+    char adivina;
+    boolean selec=false;
+    char [] vistos = new char [0];
+    
+    for(int a=0;a<mostrados.length;a++){
+        for(int b=0;b<mostrados[0].length;b++){
+            
+        }
+        
+    }
+    
+        return fallos;
+    }
+    public static int facil(char [][]salida,char[][]mostrados,char[][]general,int fallos){
+    //Es como la seleccion que hace el usuario, pero en vez de introducir las casillas por teclado, salen de manera aleatoria teniendo solo en cuenta las dimensiones de la tabla
+        int cas1,cas11,cas2,cas22;
+        boolean selec=false;
+       do{//Eleccion de la primera casilla
                
-                System.out.println("Selecciona una casilla");
-                casilla1=sc.next();
-                if (casilla1.length()>1){
-                
-                    cas1=Character.getNumericValue(casilla1.charAt(0));
-                    cas11=Character.getNumericValue(casilla1.charAt(1));
+            cas1=(int)(Math.random()*salida.length);
+            cas11=(int)(Math.random()*salida[0].length);
 
                     if (cas1>=0&&cas1<salida.length&&cas11>=0&&cas11<salida[0].length){//Filtro para entradas no validas
                         //Sustitucion de la casilla elegida
@@ -255,23 +257,13 @@ public class ProyectoParejas {
                     else{
                         System.out.println("Introduce valores n");
                     }
-                }
-                else{
-                    System.out.println("Introduce valores validos");
-                }
             }while(selec==false);
-
-            selec=false;
+       selec=false;
 
             do{//Eleccion de la segunda casilla
-
-                System.out.println("Selecciona la segunda casilla");
-                casilla2=sc.next();
-                if (casilla2.length()>1){
+                    cas2=(int)(Math.random()*salida.length);
+                    cas22=(int)(Math.random()*salida[0].length);
                     
-                    cas2=Character.getNumericValue(casilla2.charAt(0));
-                    cas22=Character.getNumericValue(casilla2.charAt(1));
-
                     if (cas2>=0&&cas2<salida.length&&cas22>=0&&cas22<salida[0].length){//Filtro para entradas no validas
                         //Sustitucion de la casilla elegida
                         if(salida[cas2][cas22]==' '){
@@ -289,10 +281,7 @@ public class ProyectoParejas {
                     else{
                         System.out.println("Introduce valores validos");
                     }
-                }
-                else{
-                        System.out.println("Introduce valores validos");
-                    }
+                    
             }while(selec==false);
 
             selec=false;
@@ -308,10 +297,130 @@ public class ProyectoParejas {
                 salida[cas2][cas22]=' ';
                 salida[cas1][cas11]=' ';
                 imprimirTablero(salida);
-                fallosU++;
-                System.out.println("Has tenido "+fallosU+" fallos");
+                fallos++;
+                System.out.println("Has tenido "+fallos+" fallos");
             }
+            return(fallos);
+    }
             
+    public static void selec(char[][]salida,char[][]general,char[][]mostrados,int[] ajustes){
+        boolean selec=false,victoria;
+        String casilla1,casilla2;
+        int cas1=0,cas11=0,cas2=0,cas22=0,fallosU=0,fallosM=0,turno=0,difMid=0;
+        Scanner sc = new Scanner (System.in);
+        do{
+            if(turno%2==0){
+                do{//Eleccion de la primera casilla
+
+                    System.out.println("Selecciona una casilla");
+                    casilla1=sc.next();
+                    if (casilla1.length()>1){
+
+                        cas1=Character.getNumericValue(casilla1.charAt(0));
+                        cas11=Character.getNumericValue(casilla1.charAt(1));
+
+                        if (cas1>=0&&cas1<salida.length&&cas11>=0&&cas11<salida[0].length){//Filtro para entradas no validas
+                            //Sustitucion de la casilla elegida
+                            if(salida[cas1][cas11]==' '){
+
+                                mostrados[cas1][cas11]=general[cas1][cas11];
+                                salida[cas1][cas11]=general[cas1][cas11];
+                                selec=true;
+                                imprimirTablero(salida);
+                            }
+
+                            else{
+                                System.out.println("Esa casilla ya esta elegida");
+                            }
+                        }
+                        else{
+                            System.out.println("Introduce valores n");
+                        }
+                    }
+                    else{
+                        System.out.println("Introduce valores validos");
+                    }
+                }while(selec==false);
+
+                selec=false;
+
+                do{//Eleccion de la segunda casilla
+
+                    System.out.println("Selecciona la segunda casilla");
+                    casilla2=sc.next();
+                    if (casilla2.length()>1){
+
+                        cas2=Character.getNumericValue(casilla2.charAt(0));
+                        cas22=Character.getNumericValue(casilla2.charAt(1));
+
+                        if (cas2>=0&&cas2<salida.length&&cas22>=0&&cas22<salida[0].length){//Filtro para entradas no validas
+                            //Sustitucion de la casilla elegida
+                            if(salida[cas2][cas22]==' '){
+
+                                mostrados[cas2][cas22]=general[cas2][cas22];
+                                salida[cas2][cas22]=general[cas2][cas22];
+                                selec=true;
+                                imprimirTablero(salida);
+                            }
+
+                            else{
+                                System.out.println("Esa casilla ya esta elegida");
+                            }
+                        }
+                        else{
+                            System.out.println("Introduce valores validos");
+                        }
+                    }
+                    else{
+                            System.out.println("Introduce valores validos");
+                        }
+                }while(selec==false);
+
+                selec=false;
+
+                //Pareja encontrada
+                if(salida[cas2][cas22]==salida[cas1][cas11]){
+
+                    System.out.println("Pareja encontrada");
+                }
+                //fallo
+                else{
+                    System.out.println("Prueba otra vez");
+                    salida[cas2][cas22]=' ';
+                    salida[cas1][cas11]=' ';
+                    imprimirTablero(salida);
+                    fallosU++;
+                    System.out.println("Has tenido "+fallosU+" fallos");
+                    System.out.println("La maquina ha tenido "+fallosM+" fallos");
+                }
+                turno++;
+            }
+            else{//Apartado del bot
+                switch (ajustes[3]) {
+                    case 0 -> turno++;
+                    case 1 -> {//Dificultad facil (seleccion de casillas de forma aleatoria)
+                        fallosM=facil(salida,mostrados,general,fallosM);
+                        turno++;
+                    }
+                    case 2 -> {//Dificultad media (50% de manera aleatoria, 50% mirando tabla de referencias
+                        if (difMid%2==0){
+                            fallosM=facil(salida,mostrados,general,fallosM);
+                            difMid++;
+                        }
+                        else{
+                            fallosM=dificil(salida,mostrados,general,fallosM);
+                            difMid++;
+                        }
+                        turno++;
+                    }
+                    case 3 -> {//Dificultad dificil (mirando tabla de referencias)
+                        fallosM=dificil(salida,mostrados,general,fallosM);
+                        turno++;
+                    }
+                    default -> {
+                    }
+                }
+            }
             //Comprovacion de tablero completado
             victoria=true;
             for (int a = 0; a < salida.length; a++) {
