@@ -215,20 +215,27 @@ public class ProyectoParejas {
         }
     }
     
-    public static int dificil(char [][]salida,char[][]mostrados,char[][]general,int fallos){
+    public static int dificil(char [][]salida,char[][]mostrados,char[][]general,int fallos,String[]encontrados){
     //Las casillas son seleccionadas teniendo en cuenta la tabla de referencia para ver si ya ha salido ese valor antes en la tablal
-    int cas1,cas11,cas2,cas22;
-    char adivina;
-    boolean selec=false;
-    char [] vistos = new char [0];
+    int enc1,enc2;
+    String sustituto;
+    boolean exito=false;
     
-    for(int a=0;a<mostrados.length;a++){
-        for(int b=0;b<mostrados[0].length;b++){
-            
+    for(int a=0;a<encontrados.length;a++){
+        for(int b=0;b<encontrados.length;b++){
+            if(encontrados[a]==encontrados[b]&&a!=b&&encontrados[a]!="+"&&encontrados[b]!="+"){
+                salida[a][b]=general[a][b];
+                encontrados[a]="+";
+                encontrados[b]="+";
+                exito=true;
+            }
         }
-        
+               
     }
     
+    if(exito==false){
+        facil(salida,mostrados,general,fallos);
+    }
         return fallos;
     }
     public static int facil(char [][]salida,char[][]mostrados,char[][]general,int fallos){
@@ -303,8 +310,8 @@ public class ProyectoParejas {
             return(fallos);
     }
             
-    public static void selec(char[][]salida,char[][]general,char[][]mostrados,int[] ajustes){
-        boolean selec=false,victoria;
+    public static void selec(char[][]salida,char[][]general,char[][]mostrados,int[] ajustes,String [] encontrados){
+        boolean selec=false,victoria,encontrado=false;
         String casilla1,casilla2;
         int cas1=0,cas11=0,cas2=0,cas22=0,fallosU=0,fallosM=0,turno=0,difMid=0;
         Scanner sc = new Scanner (System.in);
@@ -322,11 +329,20 @@ public class ProyectoParejas {
                         if (cas1>=0&&cas1<salida.length&&cas11>=0&&cas11<salida[0].length){//Filtro para entradas no validas
                             //Sustitucion de la casilla elegida
                             if(salida[cas1][cas11]==' '){
-
+                                
+                                if(mostrados[cas1][cas11]==' '){
+                                    encontrado=true;
+                                }
                                 mostrados[cas1][cas11]=general[cas1][cas11];
                                 salida[cas1][cas11]=general[cas1][cas11];
                                 selec=true;
                                 imprimirTablero(salida);
+                                
+                                if(encontrado==true){
+                                    encontrados=Arrays.copyOf(encontrados,encontrados.length+1);
+                                    encontrados[encontrados.length-1]= String.valueOf(salida[cas1][cas11]) + String.valueOf(cas1) + String.valueOf(cas11);
+                                    encontrado=false;
+                                }
                             }
 
                             else{
@@ -356,11 +372,19 @@ public class ProyectoParejas {
                         if (cas2>=0&&cas2<salida.length&&cas22>=0&&cas22<salida[0].length){//Filtro para entradas no validas
                             //Sustitucion de la casilla elegida
                             if(salida[cas2][cas22]==' '){
-
+                                if(mostrados[cas2][cas22]==' '){
+                                    encontrado=true;
+                                }
                                 mostrados[cas2][cas22]=general[cas2][cas22];
                                 salida[cas2][cas22]=general[cas2][cas22];
                                 selec=true;
                                 imprimirTablero(salida);
+                                
+                                if(encontrado==true){
+                                    encontrados=Arrays.copyOf(encontrados,encontrados.length+1);
+                                    encontrados[encontrados.length-1]= salida[cas2][cas22] + String.valueOf(cas2) + String.valueOf(cas22);
+                                    encontrado=false;
+                                }
                             }
 
                             else{
@@ -374,6 +398,7 @@ public class ProyectoParejas {
                     else{
                             System.out.println("Introduce valores validos");
                         }
+                    System.out.println(Arrays.toString(encontrados));
                 }while(selec==false);
 
                 selec=false;
@@ -408,13 +433,13 @@ public class ProyectoParejas {
                             difMid++;
                         }
                         else{
-                            fallosM=dificil(salida,mostrados,general,fallosM);
+                            fallosM=dificil(salida,mostrados,general,fallosM,encontrados);
                             difMid++;
                         }
                         turno++;
                     }
                     case 3 -> {//Dificultad dificil (mirando tabla de referencias)
-                        fallosM=dificil(salida,mostrados,general,fallosM);
+                        fallosM=dificil(salida,mostrados,general,fallosM,encontrados);
                         turno++;
                     }
                     default -> {
@@ -460,6 +485,8 @@ public class ProyectoParejas {
         char general [][];
         char mostrados [][];
         char salida [][];
+        
+        String encontrados[]=new String [0];
         //variables generales
         char asciiGuardado [];
         int ajustes[] = new int[8];
@@ -504,7 +531,7 @@ public class ProyectoParejas {
                 //Insercion de temporizador
                 inicio=System.currentTimeMillis();
                 //Seleccion de casilla
-                selec(salida,general,mostrados,ajustes);
+                selec(salida,general,mostrados,ajustes,encontrados);
                 
             }//Cierre de condicion de juego cerrado
         //Tiempo de juego
