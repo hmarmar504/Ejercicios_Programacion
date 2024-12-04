@@ -82,8 +82,8 @@ public class ProyectoParejas {
             //Seleccion de los ajustes del juego
             System.out.println("Elija sus opciones de juego");
             System.out.println("1.- Tamaño del tablero");
-            System.out.println("2.- Dificultad");
-            System.out.println("3.- Zoom");
+            System.out.println("2.- Zoom");
+            System.out.println("3.- Dificultad");
             System.out.println("4.- Cantidad de errores");
             System.out.println("5.- Tiempo de muestra");
             System.out.println("6.- Salir de los ajustes");
@@ -114,7 +114,7 @@ public class ProyectoParejas {
                     do{
                         fallo=false;
                         limpiar();
-                    System.out.println("Seleccione dificultad");
+                    System.out.println("Seleccione zoom");
                     ajustes[2]=sc.nextInt();
 
                         if(ajustes[2]>-1&&ajustes[2]<3){
@@ -129,7 +129,7 @@ public class ProyectoParejas {
                     do{
                         fallo=false;
                         limpiar();
-                    System.out.println("Seleccione zoom");
+                    System.out.println("Seleccione dificultad");
                     ajustes[3]=sc.nextInt();
 
                         if(ajustes[3]>-1&&ajustes[3]<3){
