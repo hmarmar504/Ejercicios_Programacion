@@ -1,8 +1,6 @@
 
 
 package com.mycompany.proyectoparejas;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Random;
@@ -117,7 +115,7 @@ public class ProyectoParejas {
                     System.out.println("Seleccione zoom");
                     ajustes[2]=sc.nextInt();
 
-                        if(ajustes[2]>-1&&ajustes[2]<3){
+                        if(ajustes[2]>-1&&ajustes[2]<=3){
                             fallo=true;
                         }
                         else{
@@ -215,26 +213,34 @@ public class ProyectoParejas {
         }
     }
     
-    public static int dificil(char [][]salida,char[][]mostrados,char[][]general,int fallos){
+    public static String[] dificil(char [][]salida,char[][]mostrados,char[][]general,int fallos,String[]encontrados){
     //Las casillas son seleccionadas teniendo en cuenta la tabla de referencia para ver si ya ha salido ese valor antes en la tablal
-    int cas1,cas11,cas2,cas22;
-    char adivina;
-    boolean selec=false;
-    char [] vistos = new char [0];
+    int enc1,enc2;
+    String sustituto;
+    boolean exito=false;
     
-    for(int a=0;a<mostrados.length;a++){
-        for(int b=0;b<mostrados[0].length;b++){
-            
+    for(int a=0;a<encontrados.length;a++){
+        for(int b=0;b<encontrados.length;b++){
+            if(encontrados[a]==encontrados[b]&&a!=b&&encontrados[a]!="+"&&encontrados[b]!="+"){
+                salida[a][b]=general[a][b];
+                encontrados[a]="+";
+                encontrados[b]="+";
+                exito=true;
+            }
         }
-        
+               
     }
     
-        return fallos;
+    if(exito==false){
+        facil(salida,mostrados,general,fallos,encontrados);
     }
-    public static int facil(char [][]salida,char[][]mostrados,char[][]general,int fallos){
-    //Es como la seleccion que hace el usuario, pero en vez de introducir las casillas por teclado, salen de manera aleatoria teniendo solo en cuenta las dimensiones de la tabla
+        return encontrados;
+    }
+    public static String[] facil(char [][]salida,char[][]mostrados,char[][]general,int fallos, String []encontrados){
+    //Es como la seleccion que hace el usuario, pero en vez de introducir las casillas por teclado, 
+    //salen de manera aleatoria teniendo solo en cuenta las dimensiones de la tabla
         int cas1,cas11,cas2,cas22;
-        boolean selec=false;
+        boolean selec=false,encontrado=false;
        do{//Eleccion de la primera casilla
                
             cas1=(int)(Math.random()*salida.length);
@@ -243,20 +249,23 @@ public class ProyectoParejas {
                     if (cas1>=0&&cas1<salida.length&&cas11>=0&&cas11<salida[0].length){//Filtro para entradas no validas
                         //Sustitucion de la casilla elegida
                         if(salida[cas1][cas11]==' '){
-
+                            
+                            if (mostrados[cas1][cas11]==' '){
+                                encontrado=true;   
+                            }
                             mostrados[cas1][cas11]=general[cas1][cas11];
                             salida[cas1][cas11]=general[cas1][cas11];
                             selec=true;
                             imprimirTablero(salida);
-                        }
-
-                        else{
-                            System.out.println("Esa casilla ya esta elegida");
+                            
+                            if(encontrado==true){
+                                    encontrados=Arrays.copyOf(encontrados,encontrados.length+1);
+                                    encontrados[encontrados.length-1]= String.valueOf(salida[cas1][cas11]) + String.valueOf(cas1) + String.valueOf(cas11);
+                                    encontrado=false;
+                            }
                         }
                     }
-                    else{
-                        System.out.println("Introduce valores n");
-                    }
+                    System.out.println(Arrays.toString(encontrados));
             }while(selec==false);
        selec=false;
 
@@ -267,11 +276,20 @@ public class ProyectoParejas {
                     if (cas2>=0&&cas2<salida.length&&cas22>=0&&cas22<salida[0].length){//Filtro para entradas no validas
                         //Sustitucion de la casilla elegida
                         if(salida[cas2][cas22]==' '){
+                            if (mostrados[cas2][cas22]==' '){
+                                encontrado=true;
+                            }
 
                             mostrados[cas2][cas22]=general[cas2][cas22];
                             salida[cas2][cas22]=general[cas2][cas22];
                             selec=true;
                             imprimirTablero(salida);
+                            
+                            if(encontrado==true){
+                                    encontrados=Arrays.copyOf(encontrados,encontrados.length+1);
+                                    encontrados[encontrados.length-1]= salida[cas2][cas22] + String.valueOf(cas2) + String.valueOf(cas22);
+                                    encontrado=false;
+                                }
                         }
 
                         else{
@@ -300,11 +318,11 @@ public class ProyectoParejas {
                 fallos++;
                 System.out.println("Has tenido "+fallos+" fallos");
             }
-            return(fallos);
+            return encontrados;
     }
             
-    public static void selec(char[][]salida,char[][]general,char[][]mostrados,int[] ajustes){
-        boolean selec=false,victoria;
+    public static void selec(char[][]salida,char[][]general,char[][]mostrados,int[] ajustes,String [] encontrados){
+        boolean selec=false,victoria,encontrado=false;
         String casilla1,casilla2;
         int cas1=0,cas11=0,cas2=0,cas22=0,fallosU=0,fallosM=0,turno=0,difMid=0;
         Scanner sc = new Scanner (System.in);
@@ -322,11 +340,20 @@ public class ProyectoParejas {
                         if (cas1>=0&&cas1<salida.length&&cas11>=0&&cas11<salida[0].length){//Filtro para entradas no validas
                             //Sustitucion de la casilla elegida
                             if(salida[cas1][cas11]==' '){
-
+                                
+                                if(mostrados[cas1][cas11]==' '){
+                                    encontrado=true;
+                                }
                                 mostrados[cas1][cas11]=general[cas1][cas11];
                                 salida[cas1][cas11]=general[cas1][cas11];
                                 selec=true;
                                 imprimirTablero(salida);
+                                
+                                if(encontrado==true){
+                                    encontrados=Arrays.copyOf(encontrados,encontrados.length+1);
+                                    encontrados[encontrados.length-1]= String.valueOf(salida[cas1][cas11]) + String.valueOf(cas1) + String.valueOf(cas11);
+                                    encontrado=false;
+                                }
                             }
 
                             else{
@@ -356,11 +383,19 @@ public class ProyectoParejas {
                         if (cas2>=0&&cas2<salida.length&&cas22>=0&&cas22<salida[0].length){//Filtro para entradas no validas
                             //Sustitucion de la casilla elegida
                             if(salida[cas2][cas22]==' '){
-
+                                if(mostrados[cas2][cas22]==' '){
+                                    encontrado=true;
+                                }
                                 mostrados[cas2][cas22]=general[cas2][cas22];
                                 salida[cas2][cas22]=general[cas2][cas22];
                                 selec=true;
                                 imprimirTablero(salida);
+                                
+                                if(encontrado==true){
+                                    encontrados=Arrays.copyOf(encontrados,encontrados.length+1);
+                                    encontrados[encontrados.length-1]= salida[cas2][cas22] + String.valueOf(cas2) + String.valueOf(cas22);
+                                    encontrado=false;
+                                }
                             }
 
                             else{
@@ -374,6 +409,7 @@ public class ProyectoParejas {
                     else{
                             System.out.println("Introduce valores validos");
                         }
+                    System.out.println(Arrays.toString(encontrados));
                 }while(selec==false);
 
                 selec=false;
@@ -382,6 +418,7 @@ public class ProyectoParejas {
                 if(salida[cas2][cas22]==salida[cas1][cas11]){
 
                     System.out.println("Pareja encontrada");
+                    
                 }
                 //fallo
                 else{
@@ -396,30 +433,31 @@ public class ProyectoParejas {
                 turno++;
             }
             else{//Apartado del bot
-                switch (ajustes[3]) {
+                switch (ajustes[2]) {
                     case 0 -> turno++;
                     case 1 -> {//Dificultad facil (seleccion de casillas de forma aleatoria)
-                        fallosM=facil(salida,mostrados,general,fallosM);
+                        encontrados=facil(salida,mostrados,general,fallosM,encontrados);
                         turno++;
                     }
                     case 2 -> {//Dificultad media (50% de manera aleatoria, 50% mirando tabla de referencias
                         if (difMid%2==0){
-                            fallosM=facil(salida,mostrados,general,fallosM);
+                            encontrados=facil(salida,mostrados,general,fallosM,encontrados);
                             difMid++;
                         }
                         else{
-                            fallosM=dificil(salida,mostrados,general,fallosM);
+                            encontrados=dificil(salida,mostrados,general,fallosM,encontrados);
                             difMid++;
                         }
                         turno++;
                     }
                     case 3 -> {//Dificultad dificil (mirando tabla de referencias)
-                        fallosM=dificil(salida,mostrados,general,fallosM);
+                        encontrados=dificil(salida,mostrados,general,fallosM,encontrados);
                         turno++;
                     }
                     default -> {
                     }
                 }
+                System.out.println(Arrays.toString(encontrados));
             }
             //Comprovacion de tablero completado
             victoria=true;
@@ -451,26 +489,20 @@ public class ProyectoParejas {
         min=tmin%60;
         thrs=tmin/60;
         System.out.println("Tu tiempo ha sido "+ thrs + ":" + min + ":" + seg );
-        System.out.println("Tu tiempo ha sido "+ thrs + ":" + tmin + ":" + tseg );
-            System.out.println(ms);
     }
+    
     public static void main(String[] args) {
         //declaracion de varialbes
         //tablas de muestra, tabla entera, y datos mostrados para la maquina
         char general [][];
         char mostrados [][];
         char salida [][];
+        
+        String encontrados[]=new String [0];
         //variables generales
         char asciiGuardado [];
         int ajustes[] = new int[8];
-        
-        String nombre;
-        long inicio=0, ms;
-        
-        Scanner sc = new Scanner (System.in);
-        
-        do{
-            //Ajustes predeterminados del juego
+        //Ajustes predeterminados del juego
             ajustes[0]=4;//Ancho de la tabla Maximo 10
             ajustes[1]=4;//Alto de la tabla Maximo 10
             ajustes[2]=1;//Zoom Maximo 3
@@ -478,7 +510,13 @@ public class ProyectoParejas {
             ajustes[4]=3;//Cantidad de errores permitidos
             ajustes[5]=3;//Tiempo de muestra mS
             ajustes[6]=0;//Variable de salida del juego: 0=Seguir jugando, otro=Salir del juego
-
+            
+        String nombre;
+        long inicio=0, ms;
+        
+        Scanner sc = new Scanner (System.in);
+        
+        do{
             //Llamada a los apartados del menu
             menuInicial(ajustes);
 
@@ -504,7 +542,7 @@ public class ProyectoParejas {
                 //Insercion de temporizador
                 inicio=System.currentTimeMillis();
                 //Seleccion de casilla
-                selec(salida,general,mostrados,ajustes);
+                selec(salida,general,mostrados,ajustes,encontrados);
                 
             }//Cierre de condicion de juego cerrado
         //Tiempo de juego
