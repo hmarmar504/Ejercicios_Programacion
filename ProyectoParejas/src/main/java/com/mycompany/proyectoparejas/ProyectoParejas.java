@@ -214,80 +214,88 @@ public class ProyectoParejas {
     public static String[] dificil(char[][] salida, char[][] mostrados, char[][] general, int fallos, String[] encontrados) {
         boolean exito = false;
 
-        // Paso 1: Buscar parejas en la lista "encontrados".
+        //Busqueda de posibles parejas
         for (int a = 0; a < encontrados.length; a++) {
             for (int b = 0; b < encontrados.length; b++) {
                 if (encontrados[a] != "+" && encontrados[b] != "+" && encontrados[a].charAt(0) == encontrados[b].charAt(0) && a!=b && exito==false) {
-                    // Recuperar las coordenadas de las parejas encontradas.
+                    //Recuperar las coordenadas de las parejas encontradas
                     int x1 = Character.getNumericValue(encontrados[a].charAt(1));
                     int y1 = Character.getNumericValue(encontrados[a].charAt(2));
                     int x2 = Character.getNumericValue(encontrados[b].charAt(1));
                     int y2 = Character.getNumericValue(encontrados[b].charAt(2));
 
-                    // Revelar las casillas en el tablero.
+                    //Incluir pareja
                     salida[x1][y1] = general[x1][y1];
                     salida[x2][y2] = general[x2][y2];
 
-                    // Marcar las parejas como usadas.
+                    //Marcar uso de casilla
                     encontrados[a] = "+";
                     encontrados[b] = "+";
                     exito = true;
+                    imprimirTablero(salida);
+                    System.out.println("Primer intento");
                 }
             }
         }
 
-        // Paso 2: Seleccionar casillas vacías si no se encontraron parejas.
+        //Seleccion casilla vacia
         if (exito==false) {
-            boolean busquedaVacio = false;
-
-            // Mientras no se encuentre una pareja y haya casillas vacías:
-            while (exito==false) {
+            int cas1=0,cas11=0,cas2=0,cas22=0,prueba=0;
+            
+            //Mientras no se encuentre una pareja y haya casillas vacías:
+            while (exito==false){
                 boolean casillaSeleccionada = false;
 
                 for (int i = 0; i < mostrados.length; i++) {
                     for (int j = 0; j < mostrados[0].length; j++) {
                         if (mostrados[i][j] == ' ' && casillaSeleccionada==false) {
-                            // Seleccionar la casilla vacía.
+                            
+                            //Seleccionar la casilla vacía.
                             mostrados[i][j] = general[i][j];
                             salida[i][j] = general[i][j];
+                            
+                            if(prueba==0){
+                                cas1=i;
+                                cas11=j;
+                                prueba++;
+                            }
+                            
+                            else if(prueba==1){
+                                cas2=i;
+                                cas22=j;
+                                prueba++;
+                            }
                             casillaSeleccionada = true;
+                            
+                            //Agregar casilla nueva
+                            encontrados = Arrays.copyOf(encontrados, encontrados.length + 1);
+                            encontrados[encontrados.length - 1] = general[i][j] + String.valueOf(i) + String.valueOf(j);
 
-                            // Agregar la nueva casilla a "encontrados".
-                            for(int c=0;c<encontrados.length;c++){
-                                if(busquedaVacio==false && encontrados[c]=="+"){
-                                    String nuevoValor = general[i][j] + String.valueOf(i) + String.valueOf(j);
-                                    encontrados[c] = nuevoValor;
-                                    busquedaVacio=true;
-                                }
-                            }
-                            if(busquedaVacio==false){
-                                String nuevoValor = general[i][j] + String.valueOf(i) + String.valueOf(j);
-                                encontrados = Arrays.copyOf(encontrados, encontrados.length + 1);
-                                encontrados[encontrados.length - 1] = nuevoValor;
-                            }
-
-                            // Verificar si esta casilla forma una pareja.
+                            //Verificar si esta casilla forma una pareja.
                             for (int a = 0; a < encontrados.length - 1; a++) {
-                                if (encontrados[a] != null && encontrados[a].charAt(0) == general[i][j]) {
+                                if (encontrados[a].charAt(0) == general[i][j]) {
                                     int x = Character.getNumericValue(encontrados[a].charAt(1));
                                     int y = Character.getNumericValue(encontrados[a].charAt(2));
 
-                                    // Revelar la pareja encontrada.
+                                    //Incluir pareja
                                     salida[x][y] = general[x][y];
                                     salida[i][j] = general[i][j];
 
-                                    // Marcar las parejas como usadas.
+                                    //Marcar uso de casilla
                                     encontrados[a] = "+";
                                     encontrados[encontrados.length - 1] = "+";
-                                    exito = true;
+                                    imprimirTablero(salida);
+                                    exito=true;
                                 }
+                            }
+                            if (salida[cas1][cas11]!=salida[cas2][cas22]&&exito==false&&prueba==2){
+                                salida[cas1][cas11]=' ';
+                                salida[cas2][cas22]=' ';
+                                exito=true;
                             }
                         }
                     }
                 }
-
-                // Si no se encontró pareja después de seleccionar una casilla, continuar buscando.
-                // Salir si no quedan casillas vacías.
             }
         }
 
@@ -463,7 +471,11 @@ public class ProyectoParejas {
 
                 //Pareja encontrada
                 if(salida[cas2][cas22]==salida[cas1][cas11]){
-
+                    for(int a=0;a<encontrados.length;a++){
+                        if(encontrados[a].charAt(0)==salida[cas2][cas22]){
+                            encontrados[a]="+";
+                        }
+                    }
                     System.out.println("Pareja encontrada");
                 }
                 //fallo
@@ -553,7 +565,7 @@ public class ProyectoParejas {
             ajustes[1]=4;//Alto de la tabla Maximo 10
             ajustes[2]=1;//Zoom Maximo 3
             ajustes[3]=0;//Dificultad de la maquina: 0=No maquina, 1=Facil, 2=Medio, 3=Dificil
-            ajustes[4]=3;//Cantidad de errores permitidos
+            ajustes[4]=10;//Cantidad de errores permitidos
             ajustes[5]=3;//Tiempo de muestra mS
             ajustes[6]=0;//Variable de salida del juego: 0=Seguir jugando, otro=Salir del juego
             
