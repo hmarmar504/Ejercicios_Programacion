@@ -108,7 +108,7 @@ public class ProyectoParejas {
                         }
                         }while(fallo==false);
                 }
-                case 2 -> {//Seleccion de dificultad
+                case 2 -> {//Seleccion de zoom
                     do{
                         fallo=false;
                         limpiar();
@@ -123,14 +123,14 @@ public class ProyectoParejas {
                         }
                     }while(fallo==false);
                 }
-                case 3 ->{//Seleccion de zoom
+                case 3 ->{//Seleccion de dificultad
                     do{
                         fallo=false;
                         limpiar();
                     System.out.println("Seleccione dificultad");
                     ajustes[3]=sc.nextInt();
 
-                        if(ajustes[3]>-1&&ajustes[3]<3){
+                        if(ajustes[3]>-1&&ajustes[3]<=3){
                             fallo=true;
                         }
                         else{
@@ -183,12 +183,10 @@ public class ProyectoParejas {
                 general[cambio1][cambio2]=mem;
             }
         }
-        
     }
     //Rellenado de tabla vacia
     public static void tabVacia(char vacio[][]){
         
-    
         for (int a = 0; a < vacio.length; a++) {
             for (int b = 0; b < vacio[0].length; b++) {
                 vacio[a][b]=' ';
@@ -213,27 +211,86 @@ public class ProyectoParejas {
         }
     }
     
-    public static String[] dificil(char [][]salida,char[][]mostrados,char[][]general,int fallos,String[]encontrados){
-    //Las casillas son seleccionadas teniendo en cuenta la tabla de referencia para ver si ya ha salido ese valor antes en la tablal
-    int enc1,enc2;
-    String sustituto;
-    boolean exito=false;
-    
-    for(int a=0;a<encontrados.length;a++){
-        for(int b=0;b<encontrados.length;b++){
-            if(encontrados[a]==encontrados[b]&&a!=b&&encontrados[a]!="+"&&encontrados[b]!="+"){
-                salida[a][b]=general[a][b];
-                encontrados[a]="+";
-                encontrados[b]="+";
-                exito=true;
+    public static String[] dificil(char[][] salida, char[][] mostrados, char[][] general, int fallos, String[] encontrados) {
+        boolean exito = false;
+
+        // Paso 1: Buscar parejas en la lista "encontrados".
+        for (int a = 0; a < encontrados.length; a++) {
+            for (int b = 0; b < encontrados.length; b++) {
+                if (encontrados[a] != "+" && encontrados[b] != "+" && encontrados[a].charAt(0) == encontrados[b].charAt(0) && a!=b && exito==false) {
+                    // Recuperar las coordenadas de las parejas encontradas.
+                    int x1 = Character.getNumericValue(encontrados[a].charAt(1));
+                    int y1 = Character.getNumericValue(encontrados[a].charAt(2));
+                    int x2 = Character.getNumericValue(encontrados[b].charAt(1));
+                    int y2 = Character.getNumericValue(encontrados[b].charAt(2));
+
+                    // Revelar las casillas en el tablero.
+                    salida[x1][y1] = general[x1][y1];
+                    salida[x2][y2] = general[x2][y2];
+
+                    // Marcar las parejas como usadas.
+                    encontrados[a] = "+";
+                    encontrados[b] = "+";
+                    exito = true;
+                }
             }
         }
-               
-    }
-    
-    if(exito==false){
-        facil(salida,mostrados,general,fallos,encontrados);
-    }
+
+        // Paso 2: Seleccionar casillas vacías si no se encontraron parejas.
+        if (exito==false) {
+            boolean busquedaVacio = false;
+
+            // Mientras no se encuentre una pareja y haya casillas vacías:
+            while (exito==false) {
+                boolean casillaSeleccionada = false;
+
+                for (int i = 0; i < mostrados.length; i++) {
+                    for (int j = 0; j < mostrados[0].length; j++) {
+                        if (mostrados[i][j] == ' ' && casillaSeleccionada==false) {
+                            // Seleccionar la casilla vacía.
+                            mostrados[i][j] = general[i][j];
+                            salida[i][j] = general[i][j];
+                            casillaSeleccionada = true;
+
+                            // Agregar la nueva casilla a "encontrados".
+                            for(int c=0;c<encontrados.length;c++){
+                                if(busquedaVacio==false && encontrados[c]=="+"){
+                                    String nuevoValor = general[i][j] + String.valueOf(i) + String.valueOf(j);
+                                    encontrados[c] = nuevoValor;
+                                    busquedaVacio=true;
+                                }
+                            }
+                            if(busquedaVacio==false){
+                                String nuevoValor = general[i][j] + String.valueOf(i) + String.valueOf(j);
+                                encontrados = Arrays.copyOf(encontrados, encontrados.length + 1);
+                                encontrados[encontrados.length - 1] = nuevoValor;
+                            }
+
+                            // Verificar si esta casilla forma una pareja.
+                            for (int a = 0; a < encontrados.length - 1; a++) {
+                                if (encontrados[a] != null && encontrados[a].charAt(0) == general[i][j]) {
+                                    int x = Character.getNumericValue(encontrados[a].charAt(1));
+                                    int y = Character.getNumericValue(encontrados[a].charAt(2));
+
+                                    // Revelar la pareja encontrada.
+                                    salida[x][y] = general[x][y];
+                                    salida[i][j] = general[i][j];
+
+                                    // Marcar las parejas como usadas.
+                                    encontrados[a] = "+";
+                                    encontrados[encontrados.length - 1] = "+";
+                                    exito = true;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Si no se encontró pareja después de seleccionar una casilla, continuar buscando.
+                // Salir si no quedan casillas vacías.
+            }
+        }
+
         return encontrados;
     }
     public static String[] facil(char [][]salida,char[][]mostrados,char[][]general,int fallos, String []encontrados){
@@ -289,17 +346,10 @@ public class ProyectoParejas {
                                     encontrados=Arrays.copyOf(encontrados,encontrados.length+1);
                                     encontrados[encontrados.length-1]= salida[cas2][cas22] + String.valueOf(cas2) + String.valueOf(cas22);
                                     encontrado=false;
-                                }
-                        }
-
-                        else{
-                            System.out.println("Esa casilla ya esta elegida");
+                            }
                         }
                     }
-                    else{
-                        System.out.println("Introduce valores validos");
-                    }
-                    
+                    System.out.println(Arrays.toString(encontrados));
             }while(selec==false);
 
             selec=false;
@@ -329,7 +379,6 @@ public class ProyectoParejas {
         do{
             if(turno%2==0){
                 do{//Eleccion de la primera casilla
-
                     System.out.println("Selecciona una casilla");
                     casilla1=sc.next();
                     if (casilla1.length()>1){
@@ -355,7 +404,6 @@ public class ProyectoParejas {
                                     encontrado=false;
                                 }
                             }
-
                             else{
                                 System.out.println("Esa casilla ya esta elegida");
                             }
@@ -397,7 +445,6 @@ public class ProyectoParejas {
                                     encontrado=false;
                                 }
                             }
-
                             else{
                                 System.out.println("Esa casilla ya esta elegida");
                             }
@@ -418,7 +465,6 @@ public class ProyectoParejas {
                 if(salida[cas2][cas22]==salida[cas1][cas11]){
 
                     System.out.println("Pareja encontrada");
-                    
                 }
                 //fallo
                 else{
@@ -433,7 +479,7 @@ public class ProyectoParejas {
                 turno++;
             }
             else{//Apartado del bot
-                switch (ajustes[2]) {
+                switch (ajustes[3]) {
                     case 0 -> turno++;
                     case 1 -> {//Dificultad facil (seleccion de casillas de forma aleatoria)
                         encontrados=facil(salida,mostrados,general,fallosM,encontrados);
@@ -549,7 +595,5 @@ public class ProyectoParejas {
         ms=(System.currentTimeMillis()-inicio);
         tiempo(ms);
         }while(ajustes[6]==0);
-        
-    }
-        
+    } 
 }
