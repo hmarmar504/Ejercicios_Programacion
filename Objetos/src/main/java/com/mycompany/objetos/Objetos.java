@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package com.mycompany.objetos;
 
 /**
@@ -11,6 +7,15 @@ package com.mycompany.objetos;
 public class Objetos {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        
+        //Definir una variable de tipo coordenada
+        Coordenada c1;
+        
+        //Reservar espacio para c1
+        c1 = new Coordenada();
+        
+        //Dar valores a c1
+        c1.setValores(3, 4);
+        c1.print();
     }
 }
