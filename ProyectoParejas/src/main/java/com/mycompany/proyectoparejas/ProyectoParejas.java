@@ -94,7 +94,7 @@ public class ProyectoParejas {
     public static void menuOpciones(int[]ajustes){
         
         int selec;
-        boolean fallo=false,salida=false;
+        boolean fallo,salida=false;
         Scanner sc = new Scanner (System.in);
         do{
             limpiar(0);
@@ -130,7 +130,7 @@ public class ProyectoParejas {
                         }
                         }while(fallo==false);
                 }
-                case 2 -> {//Seleccion de zoom
+                case 2 -> {//Seleccion de zoom (El zoom no esta agregado
                     
                     do{
                         limpiar(0);
@@ -617,6 +617,7 @@ public class ProyectoParejas {
     
     public static void archivo(int[]ajustes, String nombre,long ms){
         
+        //A esta funcion todavia le faltan ajustes, como que lea los datos que habia ya incluidos para poder mostrarlos en el juego
         long puntuacion=((ajustes[0]*ajustes[1]*6)-(ms/1000));
         
         try{   
@@ -628,7 +629,7 @@ public class ProyectoParejas {
             escribir.close();
         }
         
-        catch(Exception e){
+        catch(IOException e){
             System.out.println("Error en el archivo");
         }
     }
