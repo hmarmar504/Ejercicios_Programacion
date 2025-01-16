@@ -9,43 +9,43 @@ package com.mycompany.objetos;
  * @author usuario
  */
 public class Coordenada {
-    int fila, columna;
+    private int fila, columna;
     
-    Coordenada (int f, int c)
+    public Coordenada (int f, int c)
     {
         setValores(f,c);
     }
     
-    Coordenada()
+    public Coordenada()
     {
     }
 
-    int getFila()
+    public int getFila()
     {
     return fila;
     }
     
-    int getColumna()
+    public int getColumna()
     {
         return columna;
     }
     
-    void setFila(int f)
+    public void setFila(int f)
     {
         fila=f;
     }
     
-    void setColumna(int c)
+    public void setColumna(int c)
     {
         columna=c;
     }
     
-    void setValores (int f, int c)
+    public void setValores (int f, int c)
     {
         fila=f;
         columna=c;
     }
-    void print()
+    public void print()
     {
         System.out.println("-------INFO-------");
         System.out.println("OBJETO COORDENADAS");
@@ -53,4 +53,20 @@ public class Coordenada {
         System.out.println("Col: "+ columna);
         System.out.println("------------------");
     }
+    public int suma()
+    {
+        return(fila+columna);
+    }
+    
+    public boolean comparar(Coordenada otra)
+    //Comparar si filas y columnas son las mismas
+    //Otra--> da acceso a un objeto Coordenada con el que comparar
+    //this--> hace referencia al objeto actual
+    {
+        boolean resul;
+        resul = ((otra.columna == columna) && (otra.getFila() == this.getFila()));
+        
+        return resul;
+    }
+    
 }
