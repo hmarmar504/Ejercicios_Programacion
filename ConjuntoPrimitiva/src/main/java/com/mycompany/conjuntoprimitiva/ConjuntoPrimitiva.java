@@ -21,7 +21,7 @@ public class ConjuntoPrimitiva {
         int menu=0;
         Scanner sc;
         sc = new Scanner(System.in);
-        while(menu<100)
+/*        while(menu<100)
         {
             System.out.println("Introduce una opcion");
             System.out.println("1. Introducir nuevo elemento");
@@ -30,6 +30,10 @@ public class ConjuntoPrimitiva {
             System.out.println("4. Eliminar conjunto de elementos");
             System.out.println("5. Ver cantidad de elementos");
             System.out.println("6. Ver elementos");
+            System.out.println("7. Ver si estan todos los elementos");
+            System.out.println("8. Conjunto de ambos");
+            System.out.println("9. Conjunto de comunes");
+            System.out.println("10 conjunto de no comunes");
             menu=sc.nextInt();
             switch(menu){
                 case 1-> {
@@ -69,12 +73,38 @@ public class ConjuntoPrimitiva {
                     }
                 }
                 case 5->{
-                    Conjunto.incluido(lleno, prueba);
+                    System.out.println(prueba.numeroElementos());
                 }
                 case 6->{
                     System.out.println(Arrays.toString(prueba.getElementos()));
                 }
+                case 7->{
+                    if(Conjunto.incluido(prueba, lleno)== true){
+                        System.out.println("Esta incluido");
+                    }
+                    else{
+                        System.out.println("No esta incluido");
+                    }
+                }
+                case 8->{
+                    prueba=Conjunto.union(prueba, lleno);
+                    System.out.println(Arrays.toString(prueba.getElementos()));
+                }
+                case 9->{
+                    prueba=Conjunto.interseccion(prueba, lleno);
+                    System.out.println(Arrays.toString(prueba.getElementos()));
+                }
+                case 10->{
+                    prueba=Conjunto.diferencia(prueba, lleno);
+                    System.out.println(Arrays.toString(prueba.getElementos()));
+                }
             }
+        }*/
+        while(prueba.numeroElementos()<6){
+            prueba.insertar((Integer)(int)(Math.random()*49)+1);
         }
+        numeros=prueba.getElementos();
+        Arrays.sort(numeros);
+        System.out.println(Arrays.toString(numeros));
     }
 }

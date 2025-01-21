@@ -122,4 +122,26 @@ public class Conjunto {
         mem.insertar(c2);
         return mem;
     }
+    public static Conjunto interseccion(Conjunto c1, Conjunto c2){
+        Conjunto mem;
+        mem = new Conjunto();
+        
+        for(int a = 0;a<c1.getElementos().length;a++){
+            if(c2.pertenece(c1.getElementos()[a])==true){
+                mem.insertar(c1.getElementos()[a]);
+            }
+        }
+        return mem;
+    }
+    public static Conjunto diferencia(Conjunto c1, Conjunto c2){
+        Conjunto mem;
+        mem = new Conjunto();
+        
+        for(int a = 0;a<c1.getElementos().length;a++){
+            if(c2.pertenece(c1.getElementos()[a])==false){
+                mem.insertar(c1.getElementos()[a]);
+            }
+        }
+        return mem;
+    }
 }
