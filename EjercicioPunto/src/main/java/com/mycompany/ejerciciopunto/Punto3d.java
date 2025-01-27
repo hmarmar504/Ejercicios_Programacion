@@ -50,4 +50,19 @@ public class Punto3d extends Punto2d {
         return cantidad;
     }
     
+    @Override
+    public String toString(){
+        String palabra;
+        palabra=("Las coordenadas son: X:"+this.ejeX+" Y:"+this.ejeY+" Z:"+this.ejeZ);
+        return palabra;
+    }
+    
+    @Override
+    public boolean equals (Object obj){
+        Punto3d otro;
+        otro=(Punto3d) obj;
+        
+        System.out.println(otro.ejeX+" "+otro.ejeY+" "+otro.ejeZ);
+        return this.getX()==otro.ejeX&&this.getY()==otro.getY()&&this.getZ()==otro.getZ();
+    }
 }

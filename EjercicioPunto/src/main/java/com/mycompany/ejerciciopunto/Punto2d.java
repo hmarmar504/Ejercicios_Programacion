@@ -53,4 +53,5 @@ public class Punto2d {
         System.out.println(this.getX());
         System.out.println(this.getY());
     }
+    
 }
