@@ -9,9 +9,10 @@ package com.mycompany.ejerciciopunto;
  * @author usuario
  */
 public class Punto2d {
-    double ejeX, ejeY;
+    private double ejeX, ejeY;
+    
     Punto2d(){
-
+        this.setValores(0,0);
     }
     Punto2d(double x, double y){
         setValores(x,y);

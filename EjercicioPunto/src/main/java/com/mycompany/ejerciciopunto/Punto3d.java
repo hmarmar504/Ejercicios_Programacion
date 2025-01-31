@@ -10,9 +10,10 @@ package com.mycompany.ejerciciopunto;
  */
 public class Punto3d extends Punto2d {
     
-    double ejeZ;
+    private double ejeZ;
+    
     Punto3d(){
-        
+        this.setValores(0, 0, 0);
     }
     Punto3d(double x, double y, double z){
         super(x,y);
@@ -44,7 +45,7 @@ public class Punto3d extends Punto2d {
         double cantidad;
         
         cantidad=Math.sqrt(
-                (Math.pow(this.getX()-otro.ejeX,2))+
+                (Math.pow(this.getX()-otro.getX(),2))+
                 (Math.pow(this.getY()-otro.getY(),2))+
                 (Math.pow(this.getZ()-otro.getZ(),2)));
         return cantidad;
@@ -53,16 +54,16 @@ public class Punto3d extends Punto2d {
     @Override
     public String toString(){
         String palabra;
-        palabra=("Las coordenadas son: X:"+this.ejeX+" Y:"+this.ejeY+" Z:"+this.ejeZ);
+        palabra=("Las coordenadas son: X:"+this.getX()+" Y:"+this.getY()+" Z:"+this.getZ());
         return palabra;
     }
     
     @Override
     public boolean equals (Object obj){
+        
         Punto3d otro;
         otro=(Punto3d) obj;
         
-        System.out.println(otro.ejeX+" "+otro.ejeY+" "+otro.ejeZ);
-        return this.getX()==otro.ejeX&&this.getY()==otro.getY()&&this.getZ()==otro.getZ();
+        return this.getX()==otro.getX()&&this.getY()==otro.getY()&&this.getZ()==otro.getZ();
     }
 }

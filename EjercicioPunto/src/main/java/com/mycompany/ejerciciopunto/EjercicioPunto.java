@@ -11,11 +11,10 @@ package com.mycompany.ejerciciopunto;
 public class EjercicioPunto {
 
     public static void main(String[] args) {
-        Punto3d p=new Punto3d(5,6,8);
-        Punto3d j=new Punto3d(5,6,8);
+        Suceso p=new Suceso(5,6,8,5,"bb");
+        Suceso j=new Suceso(5,6,8,5,"aa");
         
-        String malo;
-        
+        String malo;       
         
         System.out.println(p.toString());
         if(p.equals(j)){
@@ -25,5 +24,4 @@ public class EjercicioPunto {
             System.out.println("Diferente");
         }
     }
-    
 }
