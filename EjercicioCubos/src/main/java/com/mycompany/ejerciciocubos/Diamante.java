@@ -18,7 +18,7 @@ public class Diamante extends Bloque {
     }
     @Override
     public void destruir(){
-        System.out.println("Illo que me rompo, diamante pa ti");
+        System.out.println("Illo que me rompo, Diamante pa ti");
     }
     
 }

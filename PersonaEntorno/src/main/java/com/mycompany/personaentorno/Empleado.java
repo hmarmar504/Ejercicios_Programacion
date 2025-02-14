@@ -8,12 +8,20 @@ package com.mycompany.personaentorno;
  *
  * @author usuario
  */
-public class Empleado extends Persona {
+public class Empleado extends Persona implements Comparable {
     String cargo;
-    int sueldo;
+    Integer sueldo;
     
     
     Empleado(String cargo, String dni, String nombre, int anio,int sueldo){
         super(dni,nombre,anio);
+        this.sueldo=(Integer)sueldo;
+        this.cargo=cargo;
+    }
+    @Override
+    public int compareTo(Object obj){
+        Empleado otro=(Empleado)obj;
+        return (sueldo.compareTo(otro.sueldo));
+        
     }
 }

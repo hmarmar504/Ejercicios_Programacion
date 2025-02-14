@@ -10,9 +10,7 @@ package com.mycompany.figuraentornos;
  */
 public class Cuadrado extends Rectangulo {
     int lado;
-    Cuadrado(){
-        
-    }
+
     Cuadrado(int l){
         super(l,l);
         lado=l;

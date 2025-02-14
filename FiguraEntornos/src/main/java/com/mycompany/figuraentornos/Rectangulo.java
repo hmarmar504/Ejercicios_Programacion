@@ -11,9 +11,7 @@ package com.mycompany.figuraentornos;
 public class Rectangulo  {
     int base,altura,area;
     
-    Rectangulo(){
-        
-    }
+
     Rectangulo(int b, int a){
         base=b;
         altura=a;
