@@ -154,65 +154,145 @@ public class EjerciciosListas {
             }
             
             case 7->{
+                int m=3,n=2,q=4;
                 
                 ArrayList<ArrayList<Double>>lista1=new ArrayList<>();
-                
-                ArrayList<Double>f1=new ArrayList<>();
-                f1.add(5.0);
-                f1.add(3.0);
-                f1.add(7.0);
-                
-                ArrayList<Double>f2=new ArrayList<>();
-                f2.add(2.0);
-                f2.add(8.0);
-                f2.add(4.0);
-                
-                lista1.add(f1);
-                lista1.add(f2);
-                 
+                for(int a=0;a<n;a++){
+                    lista1.add(new ArrayList<>());
+                    for (int b=0;b<m;b++){
+                        lista1.get(a).add(Math.random()*10+1);
+                    }
+                }
                 ArrayList<ArrayList<Double>>lista2=new ArrayList<>();
                 
-                ArrayList<Double>f3=new ArrayList<>();
-                f3.add(2.0);
-                f3.add(3.0);
-                
-                ArrayList<Double>f4=new ArrayList<>();
-                f4.add(4.0);
-                f4.add(2.0);
-                
-                ArrayList<Double>f5=new ArrayList<>();
-                f5.add(8.0);
-                f5.add(9.0);
-                
-                lista2.add(f3);
-                lista2.add(f4);
-                lista2.add(f5);
-               
+                for(int a=0;a<q;a++){
+                    lista2.add(new ArrayList<>());
+                    for (int b=0;b<m;b++){
+                        lista2.get(a).add(Math.random()*10+1);
+                    }
+                }
                 ArrayList<ArrayList<Double>>lista3=new ArrayList<>();
                 
-                ArrayList<Double>mem;
                 
-                for(int a=0;a<lista1.size();a++){
-                    mem=new ArrayList<>();
-                    double suma=0;
-                    //recorre la lista1 tantas veces como listas en la lista1
-                    for (int b=0;b<lista2.size();b++){
-                        //recorre la lista1 tantas veces como variables haya en sus listas
-                        for(int c=0;c<lista1.get(a).size();c++){
-                            //recorre las listas de lista1 tantas veces como listas haya en la lista2
-                            suma=suma+lista1.get(a).get(c)*lista2.get(b).get(c);
+                for(int a=0;a<n;a++){
+                    lista3.add(new ArrayList<>());
+                    for(int b=0;b<q;b++){
+                        double sum=0;
+                        for(int c=0;c<m;c++){
+                            sum=+lista1.get(a).get(c)*lista2.get(b).get(c);
                         }
-                        mem.add(suma);
+                        lista3.get(a).add(sum);
                     }
-                    lista3.add(mem);
+                }
+                System.out.println(lista3.toString());
+            }
+            
+            case 8->{
+                ArrayList<Integer>par=new ArrayList<>();
+                ArrayList<Integer>imp=new ArrayList<>();
+                
+                for(int a=0;a<100;a++){
+                    if((a+1)%2==0){
+                        par.add(a+1);
+                    }
+                    else{
+                        imp.add(a+1);
+                    }
                 }
                 
+                System.out.println(par.toString());
+                System.out.println(imp.toString());
+                
+                par.addAll(imp);
+                Collections.sort(par);
+
+                boolean comp=true;
+                for(int a=0;a<100;a++){
+                    if(par.get(a)!=a+1){
+                        comp=false;
+                    }
+                }
+                if (!comp){
+                    System.out.println("Ta mal");
+                }
+                else{
+                    System.out.println("Ta bien");
+                }
+            }
+            
+            case 10->{
+                ArrayList<Integer>nums=new ArrayList<>();
+                
+                for(int a=0;a<500;a++){
+                    nums.add((int)(Math.random()*50+1));
+                }
+                Collections.sort(nums);
+                System.out.println(nums.toString());
+                int cant=0;
+                while(cant+1!=nums.size()){
+                    if(nums.get(cant).equals(nums.get(cant+1))){
+                        nums.remove(cant+1);
+                    }
+                    else{
+                        cant++;
+                    }
+                }
+                System.out.println(nums.toString());
+            }
+            case 11->{
+                ArrayList<Integer>lista1=new ArrayList<>();
+                ArrayList<Integer>lista2=new ArrayList<>();
+
+                for(int a=0;a<100;a++){
+                    lista1.add((int)(Math.random()*100+1));
+                }
+                lista2.addAll(lista1);
+                Collections.shuffle(lista1);
+                System.out.println(lista1);
+                lista1=ordenar(lista1);
+                System.out.println(lista1);
+                if(lista1.containsAll(lista2)){
+                    System.out.println("tiene todo");
+                }
             }
             default->{
                 System.out.println("todavia no esta");
             }
         }
     }
+    public static ArrayList<Integer> ordenar(ArrayList<Integer> lista){
+        
+        if(lista.size()<=1){
+            return lista;
+        }
+        else{
+            int pivote=lista.get(0);
+            lista.remove(0);
+            ArrayList<Integer>mayor=new ArrayList<>();
+            ArrayList<Integer>menor=new ArrayList<>();
+            
+            System.out.println(lista);
+            for (int a=0;a<lista.size();a++){
+                if(lista.get(a)>pivote){
+                    mayor.add(lista.get(a));
+                }
+                else{
+                    menor.add(lista.get(a));
+                }
+            }
+            lista.removeAll(lista);
+            mayor=ordenar(mayor);
+            menor=ordenar(menor);
+            lista.addAll(menor);
+            lista.add(pivote);
+            lista.addAll(mayor);
+                System.out.println(lista);
+                
+            return lista;
+        }
+    }
+    
+    
     public static int menu(){
         Scanner sc = new Scanner (System.in);
         System.out.println("Selecciona el ejercicio");

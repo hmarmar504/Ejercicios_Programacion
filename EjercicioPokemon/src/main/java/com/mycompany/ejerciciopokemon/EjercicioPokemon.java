@@ -68,6 +68,7 @@ public class EjercicioPokemon {
                 turno++;
             }
         }
+        
         poke[0].setExperiencia(poke[0].getExperiencia()+25);
         System.out.println("Tu Pichu ha ganado 25 puntos de experiencia");
         System.out.println("Tu Pichu tiene "+poke[0].getExperiencia()+" puntos de experiencia");
