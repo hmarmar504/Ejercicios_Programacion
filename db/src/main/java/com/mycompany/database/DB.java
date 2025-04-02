@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,20 +44,19 @@ public class DB {
         DB(String name,String user,String pass){
             //Constructor para nombre y usuario
             //Puerto 3306
+            this(name);
             this.user=user;
-            this.nombreBD=name;
             this.password=pass;
         }
         DB(String name,String user,String pass,String port){
             //Constructor completo: nombre, usuario, y puerto
-            this.user=user;
-            this.nombreBD=name;
-            this.password=pass;
+            this(name,user,pass);
             this.port=port;
         }
         
-    public void consulta(String consulta){
+    public ArrayList<Jugador> consulta(String consulta){
      
+        ArrayList<Jugador> list = new ArrayList<>();
         
         try
         {
@@ -70,16 +70,18 @@ public class DB {
             rs = sentencia.executeQuery("Select * from jugadores");
             rsmd =rs.getMetaData();
             
-
             while(rs.next())
             {
+                Jugador jug=new Jugador();
                 int numCol = rsmd.getColumnCount();
                 
                 for(int a = 0;a<numCol;a++){
-                System.out.print(rs.getString(a+1)+" ");
+                    
+                
+                jug.setDato(rs.getString(a+1));
                 }
                 System.out.println();
-                
+                list.add(jug);
             }
         }
         catch (SQLException e)
@@ -98,6 +100,6 @@ public class DB {
             }
     
         }
-        
+        return list;
     }
 }

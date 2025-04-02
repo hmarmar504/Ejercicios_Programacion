@@ -1,6 +1,6 @@
 
 
-package com.mycompany.proyectoparejas;
+package com.mycompany.ProyectoGUI;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

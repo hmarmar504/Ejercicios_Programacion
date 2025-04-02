@@ -4,6 +4,7 @@
 
 package com.mycompany.database;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -19,15 +20,46 @@ public class DataBase{
 
     public static void main(String[] args) 
     {
+        
         DB database= inicio();
         database.consulta("show tables");
         consulta(database);
-
+        
+    }
+    public static void seleccion(){
+        int selec;
+        Scanner sel=new Scanner(System.in);
+        selec=sel.nextInt();
+        switch(selec){
+            case 1->{
+                
+            }
+            case 2->{
+                
+            }
+            case 3->{
+                
+            }
+            case 4->{
+                
+            }
+        }
+    }
+    public static void borra(DB base){
+        
+    }
+    public static void crea(DB base){
+        
+    }
+    public static void update(DB base){
+        
     }
     public static void consulta(DB base){
-        System.out.println("Elije tabla");
-        base.consulta("show tables");
+        ArrayList<Jugador>jugadores=new ArrayList<>();
         
+        jugadores.addAll(base.consulta("show tables"));
+        
+        System.out.println(jugadores.toString());
     }
     
     public static DB inicio(){
