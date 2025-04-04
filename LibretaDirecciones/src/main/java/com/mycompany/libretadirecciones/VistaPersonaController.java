@@ -6,6 +6,8 @@ package com.mycompany.libretadirecciones;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 
@@ -66,17 +68,52 @@ public class VistaPersonaController implements Initializable
 
     //Inicializa la clase controller y es llamado justo después de cargar el archivo FXML
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+     public void initialize(URL url, ResourceBundle rb) {
+
+
         //Inicializo la tabla con las dos primera columnas
+
         String nombre = "nombre";
+
         String apellidos = "apellidos";
 
         nombreColumn.setCellValueFactory(new PropertyValueFactory<>(nombre));
+
         apellidosColumn.setCellValueFactory(new PropertyValueFactory<>(apellidos));
-        
+
+
         //Borro los detalles de la persona
+
         mostrarDetallesPersona(null);
-    }    
+
+        
+        //Escucho cambios en la selección de la tabla y muestro los detalles en caso de cambio
+
+        //OPCIÓN 1: a través de una expresión lambda
+        //La expresión lambda evita tener que crear una clase que implemente la interfaz ChangeListener y sobreescribir el método changed(...)
+
+        tablaPersonas.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> mostrarDetallesPersona((Persona)newValue));
+        
+        //OPCIÓN 2: evitar la expresión lambda y escribir todo el código a sobreescribir de la interfaz dentro del argumento del método 'addListener(ChangeListener cl)'
+        //Hemos de realizar dos imports:
+        //import javafx.beans.value.ChangeListener;
+        //import javafx.beans.value.ObservableValue;
+        tablaPersonas.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener()
+                {
+                    @Override public void changed(ObservableValue o,Object oldValue, Object newValue){
+                        mostrarDetallesPersona((Persona)newValue);
+                }
+        });
+        
+        //OPCIÓN 3: realizar un proceso parecido a los comparadores que implementan Comparator: crear una clase nueva y usar una instancia que se pasa como argumento al método  'addListener(ChangeListener cl)'
+        //Os dejo como ejercicio crear esta nueva clase que se usaría con el siguiente código
+        //ListenerParaTabla cl = new ListenerParaTabla(this);
+        
+        //tablaPersonas.getSelectionModel().selectedItemProperty().addListener(cl);
+
+    }
     
     //Es llamado por la aplicación principal para inicializar valores de la tabla
     //a través de una referencia recibida como argumento (mirar el método muestraVistaPersona() de la clase LibretaDirecciones)
@@ -89,5 +126,45 @@ public class VistaPersonaController implements Initializable
         //insertar los valores uno a uno en la tabla
 
         tablaPersonas.setItems(libretaDirecciones.getDatosPersona());
+    }
+    private void mostrarDetallesPersona(Persona persona) {
+
+
+        if (persona != null) {
+
+            //Relleno los labels desde el objeto persona
+
+            nombreLabel.setText(persona.getNombre());
+
+            apellidosLabel.setText(persona.getApellidos());
+
+            direccionLabel.setText(persona.getDireccion());
+
+            codigoPostalLabel.setText(Integer.toString(persona.getCodigoPostal()));
+
+            ciudadLabel.setText(persona.getCiudad());
+
+            //TODO: Tenemos que convertir la fecha de nacimiento en un String
+
+            //fechaDeNacimientoLabel.setText(...);
+
+        } else {
+
+            //Persona es null, vacío todos los labels.
+
+            nombreLabel.setText("");
+
+            apellidosLabel.setText("");
+
+            direccionLabel.setText("");
+
+            codigoPostalLabel.setText("");
+
+            ciudadLabel.setText("");
+
+            fechaDeNacimientoLabel.setText("");
+
+        }
+
     }
 }

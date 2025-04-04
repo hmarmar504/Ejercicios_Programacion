@@ -49,17 +49,22 @@ public class LibretaDirecciones extends Application
     @Override
     public void start(Stage escenarioPrincipal) {
          try {
+             
             FXMLLoader vista = new FXMLLoader(LibretaDirecciones.class.getResource("VistaPrincipal.fxml"));
             
-            escenaPrincipal = new Scene(vista.load());
             
+            contenedorPrincipal = vista.load();
+             
+            escenaPrincipal = new Scene(contenedorPrincipal);
+             
             escenarioPrincipal.setScene(escenaPrincipal);
             escenarioPrincipal.setTitle("Libreta de direcciones");
             escenarioPrincipal.show();
-        
+             
             muestraVistaPersona();
             
          } catch (Exception ex) {
+             System.out.println("a");
               System.out.println(ex.getMessage());
          }
     }
@@ -68,17 +73,18 @@ public class LibretaDirecciones extends Application
     
 
 
-    public void muestraVistaPersona() 
+     public void muestraVistaPersona() 
     {
      
          try {
              FXMLLoader vista = new FXMLLoader(LibretaDirecciones.class.getResource("VistaPersona.fxml"));
              
-             vistaPersona = vista.load();
-            
-             contenedorPrincipal.setCenter(vistaPersona);
-              
+             escenaPrincipal.setRoot(vista.load());
+              //Doy acceso al controlador VistaPersonaCOntroller a LibretaDirecciones
 
+            VistaPersonaController controller = vista.getController();
+
+            controller.setLibretaDirecciones(this);
          } catch (Exception ex) {
              System.out.println(ex.getMessage());
                      
