@@ -10,6 +10,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import javafx.scene.control.TableView;
 
@@ -146,7 +148,7 @@ public class VistaPersonaController implements Initializable
 
             //TODO: Tenemos que convertir la fecha de nacimiento en un String
 
-            //fechaDeNacimientoLabel.setText(...);
+            fechaDeNacimientoLabel.setText(UtilidadDeFecha.formato(persona.getFechaDeNacimiento()));
 
         } else {
 
@@ -167,4 +169,38 @@ public class VistaPersonaController implements Initializable
         }
 
     }
+    
+    @FXML
+     private void borrarPersona() {
+
+        //Capturo el indice seleccionado y borro su item asociado de la tabla
+
+        int indiceSeleccionado = tablaPersonas.getSelectionModel().getSelectedIndex();
+
+        if (indiceSeleccionado >= 0){
+
+            //Borro item
+
+            tablaPersonas.getItems().remove(indiceSeleccionado);
+
+
+        } else {
+
+            //Muestro alerta
+
+            Alert alerta = new Alert(AlertType.WARNING);
+
+            alerta.setTitle("Atención");
+
+            alerta.setHeaderText("Persona no seleccionada");
+
+            alerta.setContentText("Por favor, selecciona una persona de la tabla");
+
+            alerta.showAndWait();
+
+
+        }
+
+    }
+
 }
