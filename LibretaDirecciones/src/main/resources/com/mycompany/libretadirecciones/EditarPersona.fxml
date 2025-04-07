@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.libretadirecciones.EditarPersonaController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.libretadirecciones.EditarPersonaController">
    <children>
       <GridPane layoutX="180.0" layoutY="131.0" prefHeight="345.0" prefWidth="600.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -124,7 +124,7 @@
             </TextField>
          </children>
       </GridPane>
-      <Button layoutX="534.0" layoutY="361.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="514.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="361.0" />
-      <Button layoutX="462.0" layoutY="361.0" mnemonicParsing="false" onAction="#guardar" text="Guardar" AnchorPane.leftAnchor="432.0" AnchorPane.rightAnchor="96.0" />
+      <Button cancelButton="true" layoutX="508.0" layoutY="361.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="27.0" prefWidth="78.0" text="Cancelar" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="508.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="361.0" />
+      <Button defaultButton="true" layoutX="426.0" layoutY="361.0" mnemonicParsing="false" onAction="#guardar" text="Guardar" AnchorPane.leftAnchor="426.0" AnchorPane.rightAnchor="102.0" />
    </children>
 </AnchorPane>
