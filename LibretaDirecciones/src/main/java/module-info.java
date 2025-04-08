@@ -6,6 +6,7 @@ module com.mycompany.libretadirecciones {
     requires javafx.graphics;
     requires jakarta.xml.bind;
     requires org.apache.pdfbox;
+    requires java.sql;
     
     opens com.mycompany.libretadirecciones to javafx.fxml, jakarta.xml.bind;
     exports com.mycompany.libretadirecciones; 

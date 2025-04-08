@@ -44,6 +44,9 @@ public class LibretaDirecciones extends Application
     private AnchorPane vistaEstadisticas;
     
     private ObservableList datosPersona = FXCollections.observableArrayList();
+    
+    private ConectorSQL conexionSql;
+
 
     public LibretaDirecciones(){
         
@@ -64,6 +67,13 @@ public class LibretaDirecciones extends Application
     public void start(Stage escenarioPrincipal) {
          try {
              
+             //Establezco conexión con la base de datos local
+            conexionSql = new ConectorSQL("jdbc:mysql://127.0.0.1:3306/personas?useSSL=false", "root", "");
+            
+            //Cargo personas de la base de datos (borrando las anteriores)
+            datosPersona.clear();
+            datosPersona.addAll(conexionSql.getPersonas());
+
             FXMLLoader vista = new FXMLLoader(LibretaDirecciones.class.getResource("VistaPrincipal.fxml"));
             contenedorPrincipal = vista.load();
             VistaPrincipalController controller = vista.getController();
@@ -216,8 +226,7 @@ public class LibretaDirecciones extends Application
         FileChooser fileChooser = new FileChooser();
 
         //Filtro para la extensión
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
-                "PDF files (*.pdf)", "*.pdf");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
         fileChooser.getExtensionFilters().add(extFilter);
 
         //Muestro el diálogo de guardar
@@ -235,13 +244,10 @@ public class LibretaDirecciones extends Application
             archivo = new File(archivo.getPath() + extension);
             documento.save(archivo);
             documento.close();
-
         }
     }
     
     public void cargaPersonas(File archivo){
-
-
         try {
 
             //Contexto
@@ -251,7 +257,6 @@ public class LibretaDirecciones extends Application
             //Leo XML del archivo y hago unmarshall
             Empaquetador empaquetador = (Empaquetador) um.unmarshal(archivo);
 
-
             //Borro los anteriores
             datosPersona.clear();
             datosPersona.addAll(empaquetador.getPersonas());
@@ -260,15 +265,10 @@ public class LibretaDirecciones extends Application
         catch (Exception e) {
 
             //Muestro alerta
-
             Alert alerta = new Alert(Alert.AlertType.ERROR);
-
             alerta.setTitle("Error");
-
             alerta.setHeaderText("No se pueden cargar datos de la ruta "+ archivo.getPath());
-
             alerta.setContentText(e.toString());
-
             alerta.showAndWait();
         }
     }
@@ -279,52 +279,38 @@ public class LibretaDirecciones extends Application
         try {
 
             //Contexto
-
             JAXBContext context = JAXBContext.newInstance(Empaquetador.class);
-
             Marshaller m = context.createMarshaller();
-
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-
             //Empaqueto los datos de las personas
-
             Empaquetador empaquetador = new Empaquetador();
-
             empaquetador.setPersonas(datosPersona);
 
 
             //Marshall y guardo XML a archivo
-
             m.marshal(empaquetador, archivo);
-
+            
+            //Guardar en la base de datos
+            conexionSql.putPersonas(datosPersona);
 
 
         } catch (Exception e) { // catches ANY exception
 
             //Muestro alerta
-
             Alert alerta = new Alert(Alert.AlertType.ERROR);
-
             alerta.setTitle("Error");
-
             alerta.setHeaderText("No se puede guardar en el archivo "+ archivo.getPath());
-
             alerta.setContentText(e.toString());
-
             alerta.showAndWait();
-
         }
-
     }
     
     public ObservableList getDatosPersona() {
-
     return datosPersona;
     }
     
     public Scene getPrimaryStage(){
-        
     return escenaPrincipal;
     }
 }

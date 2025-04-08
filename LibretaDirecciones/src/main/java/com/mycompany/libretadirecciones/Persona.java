@@ -27,9 +27,10 @@ public class Persona
 
     public Persona() {
 
-        this(null, null);
+        this(null, null, null, null, 0, null);
 
     }
+    
 
     public Persona(String nombre, String apellidos) {
 
@@ -45,6 +46,22 @@ public class Persona
 
         this.fechaDeNacimiento = LocalDate.of(1974, 6, 15);
 
+    }
+
+    Persona(String nombre, String apellidos, String direccion, String ciudad, int codigoPostal, LocalDate toLocalDate) {
+        
+        this.nombre = nombre;
+
+        this.apellidos = apellidos;
+
+        this.direccion = direccion;
+
+        this.ciudad = ciudad;
+
+        this.codigoPostal = codigoPostal;
+
+        this.fechaDeNacimiento = toLocalDate;
+        
     }
 
     public void clear()
