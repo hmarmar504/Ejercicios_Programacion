@@ -5,6 +5,7 @@
 package com.mycompany.libretadirecciones; //modifica esta línea según tus necesidades
 
 
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
 
 
@@ -121,15 +122,17 @@ public class Persona
 
     }
 
-    public LocalDate getFechaDeNacimiento() {
-
-        return fechaDeNacimiento;
-
-    }
-
     public void setFechaDeNacimiento(LocalDate fechaDeNacimiento) {
 
         this.fechaDeNacimiento=fechaDeNacimiento;
+
+    }
+    
+    @XmlJavaTypeAdapter(AdaptadorDeFechas.class)
+
+    public LocalDate getFechaDeNacimiento() {
+
+        return fechaDeNacimiento;
 
     }
     

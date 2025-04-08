@@ -6,6 +6,8 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,7 +23,14 @@ import javafx.stage.Stage;
 import javafx.scene.layout.AnchorPane;
 
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 
 
 public class LibretaDirecciones extends Application 
@@ -31,6 +40,8 @@ public class LibretaDirecciones extends Application
     private BorderPane contenedorPrincipal;
 
     private AnchorPane vistaPersona;
+    
+    private AnchorPane vistaEstadisticas;
     
     private ObservableList datosPersona = FXCollections.observableArrayList();
 
@@ -47,22 +58,20 @@ public class LibretaDirecciones extends Application
         datosPersona.add(new Persona("Mónica", "de Santos Sánchez"));
     }
     
-        public ObservableList getDatosPersona() {
-
-        return datosPersona;
-
-    }
+    
     
     @Override
     public void start(Stage escenarioPrincipal) {
          try {
              
             FXMLLoader vista = new FXMLLoader(LibretaDirecciones.class.getResource("VistaPrincipal.fxml"));
-            
             contenedorPrincipal = vista.load();
-             
+            VistaPrincipalController controller = vista.getController();
+            
+            //Doy acceso al controlador VistaPrincipalController a LibretaDirecciones
+            controller.setLibretaDirecciones(this);
             escenaPrincipal = new Scene(contenedorPrincipal);
-             
+           
             escenarioPrincipal.setScene(escenaPrincipal);
             escenarioPrincipal.setTitle("Libreta de direcciones");
             escenarioPrincipal.getIcons().add(new Image("file:./src/main/resources/com/mycompany/libretadirecciones/icono32.png")); //Ojo con la ruta!!
@@ -75,25 +84,18 @@ public class LibretaDirecciones extends Application
          }
     }
 
-
-    
-
-
      public void muestraVistaPersona() 
     {
      
          try {
              FXMLLoader vista = new FXMLLoader(LibretaDirecciones.class.getResource("VistaPersona.fxml"));
              vistaPersona=vista.load();
-            contenedorPrincipal.setCenter(vistaPersona);
-             //escenaPrincipal.setCenter(vista.load());
+             contenedorPrincipal.setCenter(vistaPersona);
+
               //Doy acceso al controlador VistaPersonaCOntroller a LibretaDirecciones
-
             VistaPersonaController controller = vista.getController();
-            
-            
-
             controller.setLibretaDirecciones(this);
+            
          } catch (Exception ex) {
              System.out.println(ex.getMessage());
                      
@@ -147,32 +149,115 @@ public class LibretaDirecciones extends Application
 
         return resul;
     }
+    
+    public void crearGrafico() {
+
+        //Cargo la vista estadísticas
+       
+         try {
+            Scene escenaGrafico;
+            FXMLLoader vista = new FXMLLoader(LibretaDirecciones.class.getResource("VistaEstadisticas.fxml"));
+            escenaGrafico = new Scene(vista.load());
+            
+             //Inicializo un nuevo escenario y asigno el principal
+            Stage escenarioEstadisticas = new Stage();
+            escenarioEstadisticas.setScene(escenaGrafico);
+            escenarioEstadisticas.setTitle("Estadísticas");
+            
+            escenarioEstadisticas.getIcons().add(new Image("file:./src/main/resources/com/mycompany/LibretaDirecciones/iconoStats32.png")); //Ojo con la ruta!!
+                
+            escenarioEstadisticas.initModality(Modality.WINDOW_MODAL);
+            
+            //Asigno el controlador
+            VistaEstadisticasController controller = vista.getController();
+            
+            controller.setDatosPersona(datosPersona);
+            
+            //Muestro el escenario
+            escenarioEstadisticas.show();
+            
+         } catch (Exception ex) {
+             System.out.println(ex.getMessage());
+         }
+    }
+    public void crearPDF() throws IOException{
+
+        //Creo un nuevo documento, una página y la añado
+        PDDocument documento = new PDDocument();
+        PDPage pagina = new PDPage();
+        documento.addPage(pagina);
+        documento.getPage(0);
+
+        //Inicio un nuevo stream de contenido
+        PDPageContentStream contentStream = new PDPageContentStream(documento, pagina);
+
+        //Establezco la posición Y de la primera líena y el tipo de fuente
+        int linea = 700;
+        contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.TIMES_ROMAN), 12);
+
+        //Recorro la lista de personas
+        List<Persona> personas = datosPersona;
+        for (Persona p : personas) {
+            //Inicio un nuevo texto y escribo los datos
+            contentStream.beginText();
+                contentStream.newLineAtOffset(25, linea);
+                contentStream.showText(p.getNombre()+" ");
+                contentStream.showText(p.getApellidos()+" ");
+                contentStream.showText(p.getDireccion()+" ");
+            contentStream.endText();
+            //Cambio de línea
+            linea -= 25;
+        }
+
+        //Cierro el content stream
+        contentStream.close();
+
+        //INicio el file chooser
+        FileChooser fileChooser = new FileChooser();
+
+        //Filtro para la extensión
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "PDF files (*.pdf)", "*.pdf");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        //Muestro el diálogo de guardar
+        File archivo = fileChooser.showSaveDialog(getPrimaryStage().getWindow());
+
+
+        if (archivo != null) {
+
+            //Me aseguro de que tiene la extensión correcta y si no la cambio
+            String extension = "";
+            if (!archivo.getPath().endsWith(extension)){
+                extension = ".pdf";
+            }
+            //Escribo en el archivo y lo cierro
+            archivo = new File(archivo.getPath() + extension);
+            documento.save(archivo);
+            documento.close();
+
+        }
+    }
+    
     public void cargaPersonas(File archivo){
 
 
         try {
 
             //Contexto
-
             JAXBContext context = JAXBContext.newInstance(Empaquetador.class);
-
             Unmarshaller um = context.createUnmarshaller();
 
-
             //Leo XML del archivo y hago unmarshall
-
             Empaquetador empaquetador = (Empaquetador) um.unmarshal(archivo);
 
 
             //Borro los anteriores
-
             datosPersona.clear();
-
             datosPersona.addAll(empaquetador.getPersonas());
-
-
-
-        } catch (Exception e) {
+        } 
+        
+        catch (Exception e) {
 
             //Muestro alerta
 
@@ -185,18 +270,11 @@ public class LibretaDirecciones extends Application
             alerta.setContentText(e.toString());
 
             alerta.showAndWait();
-
-
         }
-
-
     }
 
-
     //Guardo personas en un fichero
-
     public void guardaPersonas(File archivo) {
-
 
         try {
 
@@ -239,6 +317,14 @@ public class LibretaDirecciones extends Application
         }
 
     }
+    
+    public ObservableList getDatosPersona() {
 
-
+    return datosPersona;
+    }
+    
+    public Scene getPrimaryStage(){
+        
+    return escenaPrincipal;
+    }
 }

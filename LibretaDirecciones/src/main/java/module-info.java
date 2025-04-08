@@ -8,4 +8,6 @@ module com.mycompany.libretadirecciones {
     opens com.mycompany.libretadirecciones to javafx.fxml;
     exports com.mycompany.libretadirecciones;
     requires jakarta.xml.bind;
+    requires org.apache.pdfbox.io;
+    
 }

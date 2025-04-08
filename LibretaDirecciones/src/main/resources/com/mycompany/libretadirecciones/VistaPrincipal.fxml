@@ -9,19 +9,24 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="Archivo">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem mnemonicParsing="false" onAction="#nuevo" text="Nuevo" />
+                  <MenuItem mnemonicParsing="false" onAction="#abrir" text="Abrir" />
+              <MenuItem mnemonicParsing="false" text="Guardar" />
+                  <MenuItem mnemonicParsing="false" onAction="#guardarComo" text="Guardar como" />
+                  <MenuItem mnemonicParsing="false" onAction="#salir" text="Salir" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu mnemonicParsing="false" text="Acerca de">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem mnemonicParsing="false" onAction="#acercaDe" text="Mostrar" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="Estadisticas">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#grafico" text="Grafico" />
+                  <MenuItem mnemonicParsing="false" onAction="#crearPDF" text="Genera PDF" />
             </items>
           </Menu>
         </menus>

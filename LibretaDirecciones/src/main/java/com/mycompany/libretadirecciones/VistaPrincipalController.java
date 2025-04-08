@@ -36,37 +36,26 @@ public class VistaPrincipalController {
 
 
     //Creo una nueva libreta de direcciones en XML vacía
-
     @FXML
-
     private void nuevo() {
 
         libretaDirecciones.getDatosPersona().clear();
-
-
     }
 
-
     //Abro un File Chooser para que el usario seleccione una libreta
-
     @FXML
-
     private void abrir() {
 
         FileChooser fileChooser = new FileChooser();
 
-
         //Filtro para la extensión
-
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
 
                 "XML files (*.xml)", "*.xml");
 
         fileChooser.getExtensionFilters().add(extFilter);
 
-
         //Muestro el diálogo de guardar
-
         File archivo = fileChooser.showOpenDialog(libretaDirecciones.getPrimaryStage().getWindow());
 
 
@@ -77,15 +66,15 @@ public class VistaPrincipalController {
         }
 
     }
-
-
-   
-
-
-    //Abro un File Chooser para guardar como
-
+    
+    //Metodo para guardar los cambios sin necesidad entrar en el menu de guardar como
     @FXML
-
+    private void guardar(){
+       
+    }
+  
+    //Abro un File Chooser para guardar como
+    @FXML 
     private void guardarComo() {
 
 
@@ -122,11 +111,8 @@ public class VistaPrincipalController {
 
     }
 
-
     //Acerca de
-
     @FXML
-
     private void acercaDe() {
 
         //Muestro alerta
@@ -145,15 +131,16 @@ public class VistaPrincipalController {
 
     }
 
-
     //Salir
-
     @FXML
-
     private void salir() {
-
         System.exit(0);
-
+    }
+    
+    //Gráfico
+    @FXML
+    private void grafico() {
+      libretaDirecciones.crearGrafico();
     }
 
 
