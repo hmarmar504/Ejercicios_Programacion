@@ -4,10 +4,9 @@ module com.mycompany.libretadirecciones {
     requires java.base;
     requires javafx.base;
     requires javafx.graphics;
-
-    opens com.mycompany.libretadirecciones to javafx.fxml;
-    exports com.mycompany.libretadirecciones;
     requires jakarta.xml.bind;
     requires org.apache.pdfbox.io;
     
+    opens com.mycompany.libretadirecciones to javafx.fxml;
+    exports com.mycompany.libretadirecciones; 
 }
