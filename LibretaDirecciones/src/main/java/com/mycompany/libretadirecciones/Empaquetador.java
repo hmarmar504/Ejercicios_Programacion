@@ -4,11 +4,10 @@
  */
 package com.mycompany.libretadirecciones;
 
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
-import jakarta.xml.bind.annotation.XmlElement;
-
-import jakarta.xml.bind.annotation.XmlRootElement;
 
 
 @XmlRootElement(name = "personas") //Define el nombre del elemento raíz XML

@@ -5,6 +5,7 @@
 package com.mycompany.libretadirecciones;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -142,6 +143,9 @@ public class VistaPrincipalController {
     private void grafico() {
       libretaDirecciones.crearGrafico();
     }
-
+    @FXML
+    private void crearPDF() throws IOException{
+        libretaDirecciones.crearPDF();
+    }
 
 }
