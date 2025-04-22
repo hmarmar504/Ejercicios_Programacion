@@ -6,7 +6,9 @@ package com.mycompany.nba;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 
 /**
  * FXML Controller class
@@ -15,15 +17,44 @@ import javafx.fxml.Initializable;
  */
 public class InicioController implements Initializable {
 
-    NBA nba;
+    private NBA nba;
+    @FXML
+    private Label lblpuerto;
+    @FXML
+    private Label lblusuario;
+    @FXML
+    private Label lblcontraseña;
+    @FXML
+    private Label lblip;
+    @FXML
+    private Label lblbd;
+    
+    private ConfigConexion config;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }
+        
+        
+    }    
     
     public void setNBA(NBA nba){
-      this.nba=nba;  
+        this.nba=nba;
+    }
+    public void config(){
+        nba.muestraConexion();
+        
+    }
+    
+    public void setConfig(ConfigConexion config){
+        this.config=config;
+        this.mostrarConfig();
+    }
+    public void mostrarConfig(){
+        lblpuerto.setText(config.getPuerto());
+        lblusuario.setText(config.getUsuario());
+        lblcontraseña.setText(config.getContraseña());
+        lblip.setText(config.getIp());
+        lblbd.setText(config.getBd());
     }
     
 }

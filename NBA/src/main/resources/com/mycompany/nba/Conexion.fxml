@@ -7,22 +7,21 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.mycompany.nba.ConexionController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.nba.ConexionController">
    <children>
-      <Button layoutX="227.0" layoutY="361.0" mnemonicParsing="false" text="Guardar" />
-      <Button layoutX="163.0" layoutY="361.0" mnemonicParsing="false" prefWidth="59.0" text="Abrir" />
-      <TextField layoutX="76.0" layoutY="49.0" />
-      <TextField layoutX="76.0" layoutY="109.0" />
+      <Button layoutX="227.0" layoutY="361.0" mnemonicParsing="false" onAction="#guardar" text="Guardar" />
+      <Button layoutX="163.0" layoutY="361.0" mnemonicParsing="false" onAction="#cargar" prefWidth="59.0" text="Cargar" />
+      <TextField fx:id="txtpuerto" layoutX="76.0" layoutY="49.0" text="3306" />
+      <TextField fx:id="txtusuario" layoutX="76.0" layoutY="109.0" text="root" />
       <Label layoutX="132.0" layoutY="22.0" text="Puerto" />
       <Label layoutX="130.0" layoutY="82.0" text="Usuario" />
       <Label layoutX="120.0" layoutY="142.0" text="Contraseña" />
-      <PasswordField layoutX="76.0" layoutY="169.0" />
+      <PasswordField fx:id="txtcontraseña" layoutX="76.0" layoutY="169.0" />
       <Label layoutX="145.0" layoutY="202.0" text="IP" />
-      <PasswordField layoutX="76.0" layoutY="229.0" />
-      <PasswordField layoutX="76.0" layoutY="289.0" />
       <Label layoutX="113.0" layoutY="262.0" text="Base de datos" />
-      <RadioButton layoutX="14.0" layoutY="365.0" mnemonicParsing="false" selected="true" text=".xml" />
-      <RadioButton layoutX="77.0" layoutY="365.0" mnemonicParsing="false" text=".ini" />
+      <RadioButton fx:id="rbtnxml" layoutX="14.0" layoutY="365.0" mnemonicParsing="false" selected="true" text=".xml" />
+      <RadioButton fx:id="rbtnini" layoutX="77.0" layoutY="365.0" mnemonicParsing="false" text=".ini" />
+      <TextField fx:id="txtdb" layoutX="76.0" layoutY="289.0" text="NBA" />
+      <TextField fx:id="txtip" layoutX="76.0" layoutY="229.0" text="127.0.0.1" />
    </children>
 </AnchorPane>
