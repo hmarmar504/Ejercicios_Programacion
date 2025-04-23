@@ -4,6 +4,8 @@
  */
 package com.mycompany.nba;
 
+import java.sql.*;
+
 
 
 public class ConectorSQL {

@@ -1,5 +1,9 @@
 package com.mycompany.nba;
 
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.PropertyException;
 import java.io.File;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +13,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
@@ -56,9 +63,28 @@ public class NBA extends Application {
     public void cargarConfig(){
         
     }
-    public void guardarConfig(){
+    
+    //
+    //PRUEBAS DE GUARDADO
+    //  
+    public void guardarConfigXML(){
         
-        //archivoXML.createNewFile();
+       
+       try {
+           archivoXML.createNewFile();
+           JAXBContext context = JAXBContext.newInstance(ConfigConexion.class);
+           Marshaller m = context.createMarshaller();
+           m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+           m.marshal(conexion, archivoXML);
+           
+       } catch (Exception ex) {
+           Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("No se puede guardar en el archivo "+ archivoXML.getPath());
+            alerta.setContentText(ex.toString());
+            alerta.showAndWait();
+       }
+       
     }
 
     public static void main(String[] args) {
