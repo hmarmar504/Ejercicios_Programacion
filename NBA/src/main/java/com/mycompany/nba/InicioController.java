@@ -42,7 +42,6 @@ public class InicioController implements Initializable {
     }
     public void config(){
         nba.muestraConexion();
-        
     }
     
     public void setConfig(ConfigConexion config){
@@ -56,5 +55,7 @@ public class InicioController implements Initializable {
         lblip.setText(config.getIp());
         lblbd.setText(config.getBd());
     }
-    
+    public void seguir(){
+        
+    }
 }

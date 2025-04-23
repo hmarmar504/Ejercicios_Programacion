@@ -20,7 +20,7 @@ public class ConfigConexion {
         this.usuario="root";
         this.contraseña="";
         this.ip="127.0.0.1";
-        this.bd="NBA";
+        this.bd="nba";
     }
 
     public String getPuerto() {

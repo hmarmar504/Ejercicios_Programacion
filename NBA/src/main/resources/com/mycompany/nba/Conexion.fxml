@@ -21,7 +21,7 @@
       <Label layoutX="113.0" layoutY="262.0" text="Base de datos" />
       <RadioButton fx:id="rbtnxml" layoutX="14.0" layoutY="365.0" mnemonicParsing="false" selected="true" text=".xml" />
       <RadioButton fx:id="rbtnini" layoutX="77.0" layoutY="365.0" mnemonicParsing="false" text=".ini" />
-      <TextField fx:id="txtdb" layoutX="76.0" layoutY="289.0" text="NBA" />
+      <TextField fx:id="txtbd" layoutX="76.0" layoutY="289.0" text="nba" />
       <TextField fx:id="txtip" layoutX="76.0" layoutY="229.0" text="127.0.0.1" />
    </children>
 </AnchorPane>

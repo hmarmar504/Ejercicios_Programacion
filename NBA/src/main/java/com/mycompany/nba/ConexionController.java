@@ -5,9 +5,13 @@
 package com.mycompany.nba;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -19,6 +23,8 @@ import javafx.scene.control.ToggleGroup;
  */
 public class ConexionController implements Initializable {
     
+    
+    //Conexion con la pantalla
     @FXML
     private TextField txtpuerto;
     @FXML
@@ -33,35 +39,60 @@ public class ConexionController implements Initializable {
     private RadioButton rbtnxml;
     @FXML
     private RadioButton rbtnini;
-    
     private ToggleGroup radioGroup;
     
+    //Conexion con el resto del programa
     private ConfigConexion config;
-    
+    private InicioController inicio;
     private NBA nba;
+    
+    //Variables locales
+    boolean guardado=false;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         rbtnxml.setToggleGroup(radioGroup);
         rbtnini.setToggleGroup(radioGroup);
-        
     }
+    
     public void setNBA(NBA nba){
         this.nba=nba;
     }
+    public void setInicio(InicioController inicio){
+        this.inicio=inicio;
+    }
+    
     public void setConfig(ConfigConexion config){
         this.config=config;
     }
+    
     public void cargar(){
-        config.setValores(txtpuerto.getText(), txtusuario.getText(), txtcontraseña.getText(), txtip.getText(), txtbd.getText());
-        nba.cargarConfig();
-        nba.cerrarConexion();
+        try {
+            config.setValores(txtpuerto.getText(), txtusuario.getText(), txtcontraseña.getText(), txtip.getText(), txtbd.getText());
+            nba.cargarConfig();
+            
+            if (!guardado){
+                nba.cerrarConexion();
+            }
+        } catch (SQLException ex) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("No es posible conectar con la base de datos");
+            alerta.setContentText(ex.toString());
+            alerta.showAndWait();
+        }
     }
     
     
     public void guardar() throws Throwable{
+        guardado=true;
+        this.cargar();
         if(radioGroup.getSelectedToggle()==rbtnxml){
-            
+            nba.guardarConfigXML();
         }
-        
+        else{
+            nba.guardarConfigINI();
+        }
+        nba.cerrarConexion();
     }
 }
