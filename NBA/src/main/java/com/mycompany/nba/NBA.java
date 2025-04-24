@@ -41,11 +41,8 @@ public class NBA extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        //!archivoXML.exists()&&!archivoINI.exists()
-        if(false){
-            muestraConexion();
-        }
-        else{
+        
+        
         FXMLLoader vista = new FXMLLoader(NBA.class.getResource("VistaPrincipal.fxml"));
         contenedorPrincipal = vista.load();
         VistaPrincipalController controller = vista.getController();
@@ -58,7 +55,7 @@ public class NBA extends Application {
         
         
         muestraInicio();
-        }
+        
         
     }
     //Configuracion de la pestaña de conexion
@@ -86,7 +83,6 @@ public class NBA extends Application {
     public void cargarConfig() throws SQLException{
         conexionSQL = new ConectorSQL(conexion.getIp(),conexion.getPuerto(),conexion.getBd(),conexion.getUsuario(),conexion.getContraseña());
         controllerInicio.mostrarConfig();
-        
     }
     
     //
@@ -138,5 +134,19 @@ public class NBA extends Application {
              System.out.println(ex.getMessage());
                      
          } 
+    }
+    public void muestraPrincipal(){
+       try {
+           FXMLLoader vista = new FXMLLoader(NBA.class.getResource("Principal.fxml"));
+           vistaPartidos=vista.load();
+           contenedorPrincipal.setCenter(vistaPartidos);
+           
+           
+           controllerInicio = vista.getController();
+           controllerInicio.setConfig(conexion);
+           controllerInicio.setNBA(this);
+       } catch (IOException ex) {
+           Logger.getLogger(NBA.class.getName()).log(Level.SEVERE, null, ex);
+       }
     }
 }

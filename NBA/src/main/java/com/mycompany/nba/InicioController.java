@@ -5,9 +5,13 @@
 package com.mycompany.nba;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 
 /**
@@ -57,5 +61,15 @@ public class InicioController implements Initializable {
     }
     public void seguir(){
         
+        try {
+            nba.cargarConfig();
+            nba.muestraPrincipal();
+        } catch (SQLException ex) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setHeaderText("No es posible conectar con la base de datos");
+            alerta.setContentText(ex.toString());
+            alerta.showAndWait();
+        }
     }
 }

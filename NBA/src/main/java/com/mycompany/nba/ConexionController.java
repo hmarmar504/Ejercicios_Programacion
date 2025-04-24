@@ -72,6 +72,7 @@ public class ConexionController implements Initializable {
             nba.cargarConfig();
             
             if (!guardado){
+                nba.muestraInicio();
                 nba.cerrarConexion();
             }
         } catch (SQLException ex) {
@@ -93,6 +94,7 @@ public class ConexionController implements Initializable {
         else{
             nba.guardarConfigINI();
         }
+        nba.muestraInicio();
         nba.cerrarConexion();
     }
 }
