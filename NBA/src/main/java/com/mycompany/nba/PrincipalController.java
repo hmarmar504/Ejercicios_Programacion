@@ -91,14 +91,8 @@ public class PrincipalController implements Initializable {
     puntosLocalColumn.setCellValueFactory(new PropertyValueFactory<>(puntosL));
     puntosVisitanteColumn.setCellValueFactory(new PropertyValueFactory<>(puntosV));
     temporadaColumn.setCellValueFactory(new PropertyValueFactory<>(temporada));
-    
-    
     }
-    
-    public void mostrarDetallesPartido(Partido partido){
-        
-    }
-    
+   
     public void setNBA(NBA nba){
         this.nba=nba;
         listaPartidos= new FilteredList(nba.getDatosPartidos());
