@@ -18,32 +18,36 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="425.0" prefWidth="285.0">
                <children>
-                  <ChoiceBox layoutX="27.0" layoutY="50.0" prefWidth="150.0" />
-                  <ChoiceBox layoutX="27.0" layoutY="130.0" prefWidth="150.0" />
-                  <Label layoutX="55.0" layoutY="185.0" text="Temporada inicial" />
+                  <ChoiceBox fx:id="equipoLocalCB" layoutX="27.0" layoutY="50.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="equipoVisitanteCB" layoutX="27.0" layoutY="130.0" prefWidth="150.0" />
+                  <Label layoutX="55.0" layoutY="185.0" text="Conferencia Local" />
                   <Label layoutX="68.0" layoutY="25.0" text="Equipo Local" />
-                  <ChoiceBox layoutX="27.0" layoutY="220.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="conferenciaLocalCB" layoutX="27.0" layoutY="210.0" prefWidth="150.0" />
                   <Label layoutX="59.0" layoutY="105.0" text="Equipo Visitante" />
-                  <Label layoutX="59.0" layoutY="265.0" text="Temporada final" />
-                  <ChoiceBox layoutX="27.0" layoutY="300.0" prefWidth="150.0" />
-                  <Button layoutX="77.0" layoutY="450.0" mnemonicParsing="false" text="Buscar" />
+                  <Label layoutX="46.0" layoutY="264.0" text="Conferencia Visitante" />
+                  <ChoiceBox fx:id="conferenciaVisitanteCB" layoutX="27.0" layoutY="290.0" prefWidth="150.0" />
+                  <Button fx:id="buscatBtn" layoutX="77.0" layoutY="525.0" mnemonicParsing="false" onAction="#buscar" text="Buscar" />
+                  <Label layoutX="55.0" layoutY="345.0" text="Temporada inicial" />
+                  <ChoiceBox fx:id="temporadaInicialCB" layoutX="27.0" layoutY="370.0" prefWidth="150.0" />
+                  <Label layoutX="59.0" layoutY="425.0" text="Temporada final" />
+                  <ChoiceBox fx:id="temporadaFinalCB" layoutX="27.0" layoutY="450.0" prefWidth="150.0" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="195.0">
                <children>
-                  <SplitPane dividerPositions="0.5" layoutX="430.0" layoutY="177.0" orientation="VERTICAL" prefHeight="598.0" prefWidth="788.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <SplitPane dividerPositions="0.6963087248322147" layoutX="430.0" layoutY="177.0" orientation="VERTICAL" prefHeight="598.0" prefWidth="788.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <TableView layoutX="-1.0" prefHeight="295.0" prefWidth="748.0">
+                              <TableView fx:id="tablaPartidos" layoutX="-1.0" prefHeight="412.0" prefWidth="746.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <columns>
-                                    <TableColumn prefWidth="123.0" text="Equipo Local" />
-                                    <TableColumn prefWidth="100.0" text="Puntos Local" />
-                                    <TableColumn prefWidth="110.0" text="Conferencia Loc" />
-                                    <TableColumn prefWidth="123.0" text="Equipo Visitante" />
-                                    <TableColumn prefWidth="100.0" text="Puntos Visitante" />
-                                    <TableColumn prefWidth="110.0" text="Conferencia Vis" />
-                                    <TableColumn text="Temporada" />
+                                    <TableColumn fx:id="equipoLocalColumn" prefWidth="150.0" text="Equipo Local" />
+                                    <TableColumn fx:id="puntosLocalColumn" prefWidth="100.0" text="Puntos Local" />
+                                    <TableColumn fx:id="conferenciaLocalColumn" text="C Local" />
+                                    <TableColumn fx:id="equipoVisitanteColumn" prefWidth="150.0" text="Equipo Visitante" />
+                                    <TableColumn fx:id="puntosVisitanteColumn" prefWidth="100.0" text="Puntos Visitante" />
+                                    <TableColumn fx:id="conferenciaVisitanteColumn" text="C Visitante" />
+                                    <TableColumn fx:id="temporadaColumn" prefWidth="85.0" text="Temporada" />
                                  </columns>
                               </TableView>
                            </children>
@@ -79,7 +83,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Puntos visitante" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                    <Label fx:id="puntosVisitanteLabel" text="Puntos visitante" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -94,17 +98,17 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Media local" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                    <Label fx:id="mediaLocalLabel" text="Media local" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Puntos locales" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                    <Label fx:id="puntosLocalLabel" text="Puntos locales" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Media visitante" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                    <Label fx:id="mediaVisitanteLabel" text="Media visitante" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -114,7 +118,7 @@
                                           <Font name="System Bold" size="22.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Puntos locales" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <Label fx:id="totalPartidosLabel" text="Puntos locales" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <font>
                                           <Font size="18.0" />
                                        </font>

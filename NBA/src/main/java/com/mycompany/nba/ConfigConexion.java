@@ -4,15 +4,28 @@
  */
 package com.mycompany.nba;
 
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 /**
  *
  * @author usuario
  */
+    @XmlRootElement(name="Configuracion")
 public class ConfigConexion {
+        
+    @XmlElement(name = "Puerto")
     private String puerto;
+    
+    @XmlElement(name ="Usuario")
     private String usuario;
+    
+    @XmlElement(name ="Contraseña")
     private String contraseña;
+    
+    @XmlElement(name ="IP")
     private String ip;
+    
+    @XmlElement(name ="Base de datos")
     private String bd;
     
     ConfigConexion(){

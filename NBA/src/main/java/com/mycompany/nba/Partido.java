@@ -11,7 +11,9 @@ package com.mycompany.nba;
 public class Partido {
     String equipoLocal;
     String equipoVisitante;
-    int putosLocal;
+    String conferenciaLocal;
+    String conferenciaVisitante;
+    int puntosLocal;
     int puntosVisitante;
     String temporada;
 
@@ -19,10 +21,12 @@ public class Partido {
         return equipoLocal;
     }
 
-    public Partido(String equipoLocal, String equipoVisitante, int putosLocal, int puntosVisitante, String temporada) {
+    public Partido(String equipoLocal, String equipoVisitante,String conferenciaLocal,String conferenciaVisitante, int putosLocal, int puntosVisitante, String temporada) {
         this.equipoLocal = equipoLocal;
         this.equipoVisitante = equipoVisitante;
-        this.putosLocal = putosLocal;
+        this.conferenciaLocal = conferenciaLocal;
+        this.conferenciaVisitante = conferenciaVisitante;
+        this.puntosLocal = putosLocal;
         this.puntosVisitante = puntosVisitante;
         this.temporada = temporada;
     }
@@ -39,16 +43,32 @@ public class Partido {
         this.equipoVisitante = equipoVisitante;
     }
 
-    public int getPutosLocal() {
-        return putosLocal;
+    public int getPuntosLocal() {
+        return puntosLocal;
     }
 
-    public void setPutosLocal(int putosLocal) {
-        this.putosLocal = putosLocal;
+    public void setPuntosLocal(int puntosLocal) {
+        this.puntosLocal = puntosLocal;
     }
 
     public int getPuntosVisitante() {
         return puntosVisitante;
+    }
+
+    public String getConferenciaLocal() {
+        return conferenciaLocal;
+    }
+
+    public void setConferenciaLocal(String conferenciaLocal) {
+        this.conferenciaLocal = conferenciaLocal;
+    }
+
+    public String getConferenciaVisitante() {
+        return conferenciaVisitante;
+    }
+
+    public void setConferenciaVisitante(String conferenciaVisitante) {
+        this.conferenciaVisitante = conferenciaVisitante;
     }
 
     public void setPuntosVisitante(int puntosVisitante) {

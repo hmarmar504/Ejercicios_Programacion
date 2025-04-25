@@ -16,6 +16,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -34,6 +36,11 @@ public class NBA extends Application {
    
    private ConectorSQL conexionSQL;
    private InicioController controllerInicio;
+   private PrincipalController controllerPrincipal;
+   private ObservableList datosPartidos = FXCollections.observableArrayList();
+   private ObservableList listaEquipos = FXCollections.observableArrayList();
+   private ObservableList listaTemporadas = FXCollections.observableArrayList();
+   private ObservableList listaConferencias = FXCollections.observableArrayList();
    
    
    private File archivoXML= new File("archivo.xml");
@@ -141,12 +148,39 @@ public class NBA extends Application {
            vistaPartidos=vista.load();
            contenedorPrincipal.setCenter(vistaPartidos);
            
+           //Llenar las listas de la pantalla principal
+           datosPartidos.clear();
+           datosPartidos.addAll(conexionSQL.getPartidos());
+           listaEquipos.clear();
+           listaEquipos.addAll(conexionSQL.getEquipos());
+           listaConferencias.clear();
+           listaConferencias.addAll(conexionSQL.getConferencia());
+           listaTemporadas.clear();
+           listaTemporadas.addAll(conexionSQL.getTemporada());
            
-           controllerInicio = vista.getController();
-           controllerInicio.setConfig(conexion);
-           controllerInicio.setNBA(this);
-       } catch (IOException ex) {
+           
+           controllerPrincipal = vista.getController();
+           controllerPrincipal.setConfig(conexion);
+           controllerPrincipal.setNBA(this);
+           
+       } catch (Exception ex) {
            Logger.getLogger(NBA.class.getName()).log(Level.SEVERE, null, ex);
        }
     }
+    public ObservableList getDatosPartidos(){
+        return datosPartidos;
+    }
+
+    public ObservableList getListaEquipos() {
+        return listaEquipos;
+    }
+
+    public ObservableList getListaTemporadas() {
+        return listaTemporadas;
+    }
+
+    public ObservableList getListaConferencias() {
+        return listaConferencias;
+    }
+    
 }
