@@ -51,6 +51,7 @@ public class ConexionController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        radioGroup = new ToggleGroup();
         rbtnxml.setToggleGroup(radioGroup);
         rbtnini.setToggleGroup(radioGroup);
     }
@@ -88,7 +89,7 @@ public class ConexionController implements Initializable {
     public void guardar() throws Throwable{
         guardado=true;
         this.cargar();
-        if(radioGroup.getSelectedToggle()==rbtnxml){
+        if(radioGroup.getSelectedToggle().equals(rbtnxml)){
             nba.guardarConfigXML();
         }
         else{
@@ -97,4 +98,5 @@ public class ConexionController implements Initializable {
         nba.muestraInicio();
         nba.cerrarConexion();
     }
+    
 }

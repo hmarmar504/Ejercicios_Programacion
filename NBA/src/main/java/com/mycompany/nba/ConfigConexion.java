@@ -4,6 +4,8 @@
  */
 package com.mycompany.nba;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 /**
@@ -11,7 +13,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
  * @author usuario
  */
     @XmlRootElement(name="Configuracion")
-public class ConfigConexion {
+    @XmlAccessorType(XmlAccessType.FIELD)
+    public class ConfigConexion {
         
     @XmlElement(name = "Puerto")
     private String puerto;
@@ -25,10 +28,10 @@ public class ConfigConexion {
     @XmlElement(name ="IP")
     private String ip;
     
-    @XmlElement(name ="Base de datos")
+    @XmlElement(name ="BaseDeDatos")
     private String bd;
     
-    ConfigConexion(){
+    public ConfigConexion(){
         this.puerto="3306";
         this.usuario="root";
         this.contraseña="";
