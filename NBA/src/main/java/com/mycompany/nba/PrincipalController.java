@@ -119,12 +119,12 @@ public class PrincipalController implements Initializable {
     
     public void buscar() {
         
-        String equipoLocal = equipoLocalCB.toString();
-        String equipoVisitante =  equipoVisitanteCB.toString();
-        String conferenciaLocal =  conferenciaLocalCB.toString();
-        String conferenciaVisitante =  conferenciaVisitanteCB.toString();
-        String temporadaInicio =  temporadaInicialCB.toString();
-        String temporadaFinal =  temporadaFinalCB.toString();
+        String equipoLocal = (String) equipoLocalCB.getValue();
+        String equipoVisitante = (String) equipoVisitanteCB.getValue();
+        String conferenciaLocal = (String) conferenciaLocalCB.getValue();
+        String conferenciaVisitante = (String) conferenciaVisitanteCB.getValue();
+        String temporadaInicio = (String) temporadaInicialCB.getValue();
+        String temporadaFinal = (String) temporadaFinalCB.getValue();
 
         listaPartidos.setPredicate(partido -> {
             boolean matchEquipoLocal = equipoLocal.equals("TODOS") || partido.getEquipoLocal().equals(equipoLocal);
@@ -174,7 +174,7 @@ public class PrincipalController implements Initializable {
     
     private int temporadaAño(String temporada) {
         String[] partes = temporada.split("/");
-        int año = Integer.parseInt(partes[0]);
+        Integer año = Integer.valueOf(partes[0]);
         return (año < 50) ? 2000 + año : 1900 + año;
     }
 }
