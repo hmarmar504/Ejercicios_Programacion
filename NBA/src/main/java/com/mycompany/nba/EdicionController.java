@@ -17,8 +17,9 @@ import javafx.scene.control.TextField;
  */
 public class EdicionController implements Initializable {
 
-    Partido partido;
-      @FXML
+    private Partido partido;
+    private NBA nba;
+    @FXML
     private TextField txtEquipoLocal;
     @FXML
     private TextField txtEquipoVisitante;
@@ -37,6 +38,13 @@ public class EdicionController implements Initializable {
     }
     public void setPartido(Partido partido){
         this.partido=partido;
+        txtEquipoLocal.setText(partido.getEquipoLocal());
+        txtEquipoVisitante.setText(partido.getEquipoVisitante());
+        txtConferenciaLocal.setText(partido.getConferenciaLocal());
+        txtConferenciaVisitante.setText(partido.getConferenciaVisitante());
+        txtTemporada.setText(partido.getTemporada());
     }
-
+    public void setNBA(NBA nba){
+        this.nba=nba;
+    }
 }

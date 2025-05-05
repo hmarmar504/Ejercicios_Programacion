@@ -26,12 +26,13 @@
                   <Label layoutX="59.0" layoutY="105.0" text="Equipo Visitante" />
                   <Label layoutX="46.0" layoutY="264.0" text="Conferencia Visitante" />
                   <ChoiceBox fx:id="conferenciaVisitanteCB" layoutX="27.0" layoutY="290.0" prefWidth="150.0" />
-                  <Button fx:id="buscatBtn" layoutX="43.0" layoutY="525.0" mnemonicParsing="false" onAction="#buscar" text="Buscar" />
+                  <Button layoutX="21.0" layoutY="525.0" mnemonicParsing="false" onAction="#buscar" text="Buscar" />
                   <Label layoutX="55.0" layoutY="345.0" text="Temporada inicial" />
                   <ChoiceBox fx:id="temporadaInicialCB" layoutX="27.0" layoutY="370.0" prefWidth="150.0" />
                   <Label layoutX="59.0" layoutY="425.0" text="Temporada final" />
                   <ChoiceBox fx:id="temporadaFinalCB" layoutX="27.0" layoutY="450.0" prefWidth="150.0" />
-                  <Button fx:id="buscatBtn1" layoutX="111.0" layoutY="525.0" mnemonicParsing="false" onAction="#buscar" text="Nuevo" />
+                  <Button layoutX="134.0" layoutY="525.0" mnemonicParsing="false" onAction="#buscar" text="Nuevo" />
+                  <Button layoutX="79.0" layoutY="525.0" mnemonicParsing="false" onAction="#editar" text="Editar" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="195.0">

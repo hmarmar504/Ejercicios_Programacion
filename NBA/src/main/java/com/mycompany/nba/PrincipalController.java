@@ -116,7 +116,7 @@ public class PrincipalController implements Initializable {
     public void setConfig(ConfigConexion config){
         this.config=config;
     }
-    
+    @FXML
     public void buscar() {
         
         String equipoLocal = (String) equipoLocalCB.getValue();
@@ -176,5 +176,19 @@ public class PrincipalController implements Initializable {
         String[] partes = temporada.split("/");
         Integer año = Integer.valueOf(partes[0]);
         return (año < 50) ? 2000 + año : 1900 + año;
+    }
+    @FXML
+    public void editar(){
+        
+        Partido seleccionado = (Partido) tablaPartidos.getSelectionModel().getSelectedItem();
+        
+        if (seleccionado != null){
+            
+            boolean guardarClicked = nba.muestraEditarPartido(seleccionado);
+            
+            if(guardarClicked){
+                
+            }
+        }
     }
 }

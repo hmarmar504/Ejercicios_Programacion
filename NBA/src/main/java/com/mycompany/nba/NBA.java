@@ -18,6 +18,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 
 /**
  * JavaFX NBA
@@ -76,6 +77,32 @@ public class NBA extends Application {
         catch (Exception ex) {
             System.out.println(ex.getMessage());
         } 
+    }
+    public boolean muestraEditarPartido(Partido partido){
+       
+        boolean resul = false;
+        try {   
+           Scene escenaEdicion;
+           FXMLLoader vista = new FXMLLoader(NBA.class.getResource("Edicion.fxml"));
+           escenaEdicion = new Scene(vista.load());
+           
+           Stage escenarioEdicion = new Stage();
+           escenarioEdicion.setScene(escenaEdicion);
+           
+           escenarioEdicion.initModality(Modality.WINDOW_MODAL);
+           
+           EdicionController controller = vista.getController();
+           
+           controller.setNBA(this);
+           controller.setPartido(partido);
+           
+           resul=true;
+        } 
+        catch (Exception ex) {
+             ex.printStackTrace();
+        }
+        
+        return resul;
     }
     public void cerrarConexion(){
         stageConexion.close();
