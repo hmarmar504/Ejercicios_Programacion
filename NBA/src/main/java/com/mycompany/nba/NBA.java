@@ -27,9 +27,11 @@ public class NBA extends Application {
 
    private static Scene escenaPrincipal;
    private Stage stageConexion;
+   private Stage stageEdicion;
    private BorderPane contenedorPrincipal;
    private AnchorPane vistaPartidos;
    private AnchorPane vistaConexion;
+   private AnchorPane vistaEdicion;
    private ConfigConexion conexion = new ConfigConexion();
    
    private ConectorSQL conexionSQL;
@@ -62,9 +64,9 @@ public class NBA extends Application {
     }
     public void muestraConexion(){
         try {
-            stageConexion=new Stage();
+            stageConexion = new Stage();
             FXMLLoader vista = new FXMLLoader (NBA.class.getResource("Conexion.fxml"));
-            vistaConexion=vista.load();
+            vistaConexion = vista.load();
             Scene escenaConexion = new Scene(vistaConexion);
             stageConexion.setScene(escenaConexion);
             stageConexion.show();
@@ -81,15 +83,15 @@ public class NBA extends Application {
     public boolean muestraEditarPartido(Partido partido){
        
         boolean resul = false;
-        try {   
-           Scene escenaEdicion;
+        try {
+           stageEdicion = new Stage();
            FXMLLoader vista = new FXMLLoader(NBA.class.getResource("Edicion.fxml"));
-           escenaEdicion = new Scene(vista.load());
+           vistaEdicion = vista.load();
            
-           Stage escenarioEdicion = new Stage();
-           escenarioEdicion.setScene(escenaEdicion);
-           
-           escenarioEdicion.initModality(Modality.WINDOW_MODAL);
+           Scene escenarioEdicion = new Scene(vistaEdicion);
+           stageEdicion.setScene(escenarioEdicion);
+           stageEdicion.show();
+           stageEdicion.setAlwaysOnTop(true);
            
            EdicionController controller = vista.getController();
            
@@ -106,6 +108,9 @@ public class NBA extends Application {
     }
     public void cerrarConexion(){
         stageConexion.close();
+    }
+    public void cerrarEdicion(){
+        stageEdicion.close();
     }
     public void cargarConfig() throws SQLException{
         conexionSQL = new ConectorSQL(conexion.getIp(),conexion.getPuerto(),conexion.getBd(),conexion.getUsuario(),conexion.getContraseña());

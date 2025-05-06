@@ -10,7 +10,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -162,8 +161,9 @@ public class PrincipalController implements Initializable {
             sumaPuntosVisitante += partido.getPuntosVisitante();
         }
 
-        double mediaPuntosLocal = totalPartidos > 0 ? (double) sumaPuntosLocal / totalPartidos : 0;
-        double mediaPuntosVisitante = totalPartidos > 0 ? (double) sumaPuntosVisitante / totalPartidos : 0;
+        double mediaPuntosLocal = (double) sumaPuntosLocal;
+        
+        double mediaPuntosVisitante = (double) sumaPuntosVisitante;
 
         totalPartidosLabel.setText("Partidos: " + totalPartidos);
         puntosLocalLabel.setText("Puntos Locales: " + sumaPuntosLocal);
@@ -175,7 +175,12 @@ public class PrincipalController implements Initializable {
     private int temporadaAño(String temporada) {
         String[] partes = temporada.split("/");
         Integer año = Integer.valueOf(partes[0]);
-        return (año < 50) ? 2000 + año : 1900 + año;
+        if(año<90){
+            return año+2000;
+        }
+        else{
+            return año+1900;
+        }
     }
     @FXML
     public void editar(){
