@@ -14,25 +14,46 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.nba.PrincipalController">
    <children>
-      <SplitPane dividerPositions="0.20741482965931865" layoutX="200.0" layoutY="109.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.27531645569620256" layoutX="200.0" layoutY="109.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="425.0" prefWidth="285.0">
                <children>
-                  <ChoiceBox fx:id="equipoLocalCB" layoutX="27.0" layoutY="50.0" prefWidth="150.0" />
-                  <ChoiceBox fx:id="equipoVisitanteCB" layoutX="27.0" layoutY="130.0" prefWidth="150.0" />
-                  <Label layoutX="55.0" layoutY="185.0" text="Conferencia Local" />
-                  <Label layoutX="68.0" layoutY="25.0" text="Equipo Local" />
-                  <ChoiceBox fx:id="conferenciaLocalCB" layoutX="27.0" layoutY="210.0" prefWidth="150.0" />
-                  <Label layoutX="59.0" layoutY="105.0" text="Equipo Visitante" />
-                  <Label layoutX="46.0" layoutY="264.0" text="Conferencia Visitante" />
-                  <ChoiceBox fx:id="conferenciaVisitanteCB" layoutX="27.0" layoutY="290.0" prefWidth="150.0" />
-                  <Button layoutX="21.0" layoutY="525.0" mnemonicParsing="false" onAction="#buscar" text="Buscar" />
-                  <Label layoutX="55.0" layoutY="345.0" text="Temporada inicial" />
-                  <ChoiceBox fx:id="temporadaInicialCB" layoutX="27.0" layoutY="370.0" prefWidth="150.0" />
-                  <Label layoutX="59.0" layoutY="425.0" text="Temporada final" />
-                  <ChoiceBox fx:id="temporadaFinalCB" layoutX="27.0" layoutY="450.0" prefWidth="150.0" />
-                  <Button layoutX="134.0" layoutY="525.0" mnemonicParsing="false" onAction="#buscar" text="Nuevo" />
-                  <Button layoutX="79.0" layoutY="525.0" mnemonicParsing="false" onAction="#editar" text="Editar" />
+                  <GridPane layoutX="2.0" layoutY="140.0" prefHeight="598.0" prefWidth="194.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ChoiceBox fx:id="equipoLocalCB" prefWidth="150.0" GridPane.columnIndex="1" />
+                        <Label text="Equipo Local" />
+                        <Label text="Temp final" GridPane.rowIndex="6" />
+                        <ChoiceBox fx:id="temporadaFinalCB" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Button mnemonicParsing="false" onAction="#buscar" text="Nuevo" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                        <Label text="Temp inicial" GridPane.rowIndex="5" />
+                        <ChoiceBox fx:id="temporadaInicialCB" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Button mnemonicParsing="false" onAction="#editar" text="Editar" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Button mnemonicParsing="false" onAction="#buscar" text="Buscar" GridPane.rowIndex="7" />
+                        <ChoiceBox fx:id="equipoVisitanteCB" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ChoiceBox fx:id="conferenciaVisitanteCB" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Equipo Visitante" GridPane.rowIndex="1" />
+                        <ChoiceBox fx:id="conferenciaLocalCB" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Conf Visitante" GridPane.rowIndex="3" />
+                        <Label text="Conf Local" GridPane.rowIndex="2" />
+                        <Label text="Ganador" GridPane.rowIndex="4" />
+                        <ChoiceBox fx:id="ganadorCB" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                     </children>
+                  </GridPane>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="195.0">
@@ -43,13 +64,13 @@
                            <children>
                               <TableView fx:id="tablaPartidos" layoutX="-1.0" prefHeight="412.0" prefWidth="746.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <columns>
-                                    <TableColumn fx:id="equipoLocalColumn" prefWidth="150.0" text="Equipo Local" />
-                                    <TableColumn fx:id="puntosLocalColumn" prefWidth="100.0" text="Puntos Local" />
-                                    <TableColumn fx:id="conferenciaLocalColumn" text="C Local" />
-                                    <TableColumn fx:id="equipoVisitanteColumn" prefWidth="150.0" text="Equipo Visitante" />
-                                    <TableColumn fx:id="puntosVisitanteColumn" prefWidth="100.0" text="Puntos Visitante" />
-                                    <TableColumn fx:id="conferenciaVisitanteColumn" text="C Visitante" />
-                                    <TableColumn fx:id="temporadaColumn" prefWidth="85.0" text="Temporada" />
+                                    <TableColumn fx:id="equipoLocalColumn" prefWidth="110.0" text="Equipo Local" />
+                                    <TableColumn fx:id="puntosLocalColumn" prefWidth="89.0" text="Puntos Local" />
+                                    <TableColumn fx:id="conferenciaLocalColumn" prefWidth="66.0" text="C Local" />
+                                    <TableColumn fx:id="equipoVisitanteColumn" prefWidth="127.0" text="Equipo Visitante" />
+                                    <TableColumn fx:id="puntosVisitanteColumn" prefWidth="118.0" text="Puntos Visitante" />
+                                    <TableColumn fx:id="conferenciaVisitanteColumn" prefWidth="83.0" text="C Visitante" />
+                                    <TableColumn fx:id="temporadaColumn" prefWidth="88.0" text="Temporada" />
                                  </columns>
                               </TableView>
                            </children>

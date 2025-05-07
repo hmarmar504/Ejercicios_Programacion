@@ -31,6 +31,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
     @XmlElement(name ="BaseDeDatos")
     private String bd;
     
+    private boolean victoria;
+    
     public ConfigConexion(){
         this.puerto="3306";
         this.usuario="root";
@@ -59,12 +61,21 @@ import jakarta.xml.bind.annotation.XmlRootElement;
         return bd;
     }
     
-    public void setValores(String puerto,String usuario,String contraseña, String ip, String bd){
+    public void setValores(String puerto,String usuario,String contraseña, String ip, String bd, boolean victoria){
         this.puerto=puerto;
         this.usuario = usuario;
         this.contraseña = contraseña;
         this.ip = ip;
         this.bd = bd;
+        this.victoria = victoria;
+    }
+
+    public boolean getVictoria() {
+        return victoria;
+    }
+
+    public void setVictoria(boolean victoria) {
+        this.victoria = victoria;
     }
     
     public void setPuerto(String puerto) {

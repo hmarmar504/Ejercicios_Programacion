@@ -6,6 +6,7 @@ package com.mycompany.nba;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
@@ -63,11 +64,13 @@ public class PrincipalController implements Initializable {
     private ChoiceBox conferenciaLocalCB;
     @FXML
     private ChoiceBox conferenciaVisitanteCB;
+    @FXML
+    private ChoiceBox ganadorCB;
     
     private NBA nba;
     private ConfigConexion config;
     private FilteredList<Partido> listaPartidos;
-
+    private ObservableList<String> listaGanadores = FXCollections.observableArrayList();
     
     
     
@@ -88,6 +91,8 @@ public class PrincipalController implements Initializable {
         puntosLocalColumn.setCellValueFactory(new PropertyValueFactory<>(puntosL));
         puntosVisitanteColumn.setCellValueFactory(new PropertyValueFactory<>(puntosV));
         temporadaColumn.setCellValueFactory(new PropertyValueFactory<>(temporada));
+        listaGanadores.addAll("Todos","Local","Visitante");
+        ganadorCB.setDisable(true);
     }
    
     public void setNBA(NBA nba){
@@ -101,6 +106,10 @@ public class PrincipalController implements Initializable {
         conferenciaVisitanteCB.setItems(nba.getListaConferencias());
         temporadaInicialCB.setItems(nba.getListaTemporadas());
         temporadaFinalCB.setItems(nba.getListaTemporadas());
+        if(config.getVictoria()){
+            ganadorCB.setItems(listaGanadores);
+            ganadorCB.setDisable(false);
+        }
         
         equipoLocalCB.setValue("TODOS");
         equipoVisitanteCB.setValue("TODOS");
@@ -131,7 +140,15 @@ public class PrincipalController implements Initializable {
             boolean matchConferenciaLocal = conferenciaLocal.equals("TODOS") || partido.getConferenciaLocal().equals(conferenciaLocal);
             boolean matchConferenciaVisitante = conferenciaVisitante.equals("TODOS") || partido.getConferenciaVisitante().equals(conferenciaVisitante);
             boolean matchTemporada = true;
-
+            boolean matchVictoria = true;
+            
+            if(ganadorCB.getValue().equals("Local")){
+                matchVictoria = partido.getPuntosLocal() > partido.getPuntosVisitante();
+            }
+            else if(ganadorCB.getValue().equals("Visitante")){
+                matchVictoria = partido.getPuntosLocal() < partido.getPuntosVisitante();
+            }
+            
             if (!temporadaInicio.equals("TODOS") && !temporadaFinal.equals("TODOS")) {
                 int añoInicio = temporadaAño(temporadaInicio);
                 int añoFinal = temporadaAño(temporadaFinal);
@@ -144,7 +161,9 @@ public class PrincipalController implements Initializable {
                    matchEquipoVisitante &&
                    matchConferenciaLocal &&
                    matchConferenciaVisitante &&
-                   matchTemporada;
+                   matchTemporada &&
+                   matchVictoria
+                   ;
             });
         
         actualizarEstadisticas();

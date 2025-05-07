@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -37,6 +38,8 @@ public class ConexionController implements Initializable {
     private TextField txtbd;
     @FXML
     private RadioButton rbtnxml;
+    @FXML
+    private CheckBox chckVictoria;
     @FXML
     private RadioButton rbtnini;
     private ToggleGroup radioGroup;
@@ -69,7 +72,7 @@ public class ConexionController implements Initializable {
     
     public void cargar(){
         try {
-            config.setValores(txtpuerto.getText(), txtusuario.getText(), txtcontraseña.getText(), txtip.getText(), txtbd.getText());
+            config.setValores(txtpuerto.getText(), txtusuario.getText(), txtcontraseña.getText(), txtip.getText(), txtbd.getText(), chckVictoria.isSelected());
             nba.cargarConfig();
             
             if (!guardado){
